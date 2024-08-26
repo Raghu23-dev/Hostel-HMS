@@ -27,13 +27,13 @@ export default function Navbar() {
       <div className={`flex ${menuOpen ? mobileMenuStyles : "hidden"} md:flex gap-10`}>
        
         <a
-          href="#"
+          href="/auth/request"
           className="md:py-3 transition-colors duration-300 hover:text-yellow-400"
         >
           Request
         </a>
         <a
-          href="#"
+          href="/auth/login"
           className={`md:bg-yellow-500 md:hover:bg-yellow-600 transition-colors duration-300 text-gray-900 font-bold md:py-3 md:px-6 md:rounded-full ${
             menuOpen ? "text-yellow-400" : ""
           }`}
