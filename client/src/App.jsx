@@ -1,15 +1,15 @@
 import './App.css'
-import HeroSection from './components/LandingPage/HeroSection'
-import Navbar from './components/LandingPage/Navbar'
+import LandingPage  from './components/LandingPage/index'
+import {Route, Routes} from "react-router-dom";
+
 function App() {
 
   return (
-<>
-   <Navbar/>
-   <HeroSection/>
-  </>
-
-
+    <>
+    <Routes>
+      <Route path='/' element={<LandingPage/>} />
+    </Routes>
+    </>
   )
 }
 
