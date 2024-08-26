@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --clr-primary: #111827;
+}
+
+body {
+  background-color: var(--clr-primary);
+}
