@@ -12,21 +12,16 @@ export default function SignIn() {
   const changePass = (event) => {
     setPass(event.target.value);
   };
-  const [position, setPosition] = useState("");
-
-  const changePosition = (event) => {
-    setPosition(event.target.value);
-  };
 
   const cms = {
-    name: "CMS",
+    name: "cms",
     type: "number",
     placeholder: "000000",
     req: true,
     onChange: changeCms,
   };
   const password = {
-    name: "Password",
+    name: "password",
     type: "password",
     placeholder: "••••••••",
     req: true,
@@ -34,59 +29,42 @@ export default function SignIn() {
   };
 
   return (
-    <div className="w-full rounded-lg sm:max-w-md bg-gray-800 border-gray-700">
-      <div className="p-4 space-y-3">
-        <h1 className="text-lg font-bold text-white">
+    <div className="w-full rounded-lg md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-gray-700">
+      <div className="p-4 space-y-2 md:space-y-4 sm:p-6">
+        <h1 className="text-lg font-bold leading-tight tracking-tight md:text-xl text-white">
           Sign in to your account
         </h1>
-        <form className="space-y-3" action="#">
+        <form className="space-y-2 md:space-y-4" action="#">
           <Input field={cms} />
           <Input field={password} />
-          <div className="flex items-center space-x-3">
-            <div className="flex items-center">
-              <input
-                type="radio"
-                value="student"
-                name="student-manager"
-                className="w-4 h-4 bg-gray-800 border-gray-600"
-                checked={position === "student"}
-                onChange={changePosition}
-              />
-              <label className="ml-2 text-sm text-gray-300">Student</label>
+          <div className="flex items-center justify-between">
+            <div className="flex items-start">
+              <div className="flex items-center h-4">
+                <input
+                  type="checkbox"
+                  className="w-4 h-4 border rounded focus:ring-3 bg-gray-700 border-gray-600 focus:ring-blue-600 ring-offset-gray-800"
+                  required=""
+                />
+              </div>
+              <div className="ml-2 text-sm">
+                <label htmlFor="remember" className="text-gray-300">
+                  Remember me
+                </label>
+              </div>
             </div>
-            <div className="flex items-center">
-              <input
-                type="radio"
-                value="manager"
-                name="student-manager"
-                className="w-4 h-4 bg-gray-800 border-gray-600"
-                checked={position === "manager"}
-                onChange={changePosition}
-              />
-              <label className="ml-2 text-sm text-gray-300">Manager</label>
-            </div>
-          </div>
-          <div className="flex items-center space-x-2">
-            <input
-              id="remember"
-              aria-describedby="remember"
-              type="checkbox"
-              className="w-4 h-4 bg-gray-700 border-gray-600"
-              required=""
-            />
-            <label htmlFor="remember" className="text-sm text-gray-300">
-              Remember me
-            </label>
           </div>
           <button
             type="submit"
-            className="w-full text-white bg-blue-600 hover:bg-blue-700 rounded-lg text-sm px-4 py-2"
+            className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Sign in
           </button>
-          <p className="text-sm text-gray-400">
-            Don’t have an account?{" "}
-            <Link to="request" className="text-blue-500 hover:underline">
+          <p className="text-sm font-light text-gray-400">
+            Don’t have an account yet?{" "}
+            <Link
+              to="request"
+              className="font-medium hover:underline text-blue-500"
+            >
               Request an account.
             </Link>
           </p>
