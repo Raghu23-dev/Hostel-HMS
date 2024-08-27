@@ -1,12 +1,13 @@
 {
-  "name": "hostel-hms",
+  "name": "web",
   "version": "1.0.0",
+  "description": "An Hostel Management System Web App",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "client": "npm run dev --prefix client",
+    "server": "npm start --prefix backend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "",
-  "license": "ISC",
-  "description": ""
+  "license": "ISC"
 }
