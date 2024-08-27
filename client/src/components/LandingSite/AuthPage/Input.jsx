@@ -9,7 +9,7 @@ Input.propTypes = {
       onChange: PropTypes.func.isRequired,
     }).isRequired,
   };
-
+  
 
 function Input({ field }) {
     const name = field.name;
