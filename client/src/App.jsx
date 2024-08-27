@@ -8,6 +8,9 @@ import RequestAcc from "./components/LandingSite/AuthPage/Request";
 import AdminSignIn from "./components/LandingSite/AuthPage/AdminSignIn";
 import Index from "./components/Dashboards/StudentDashboard/Index";
 import Home from "./components/Dashboards/StudentDashboard/Home";
+import Attendance from "./components/Dashboards/Studentdashboard/Attendance";
+import Complaints from "./components/Dashboards/Studentdashboard/Complaints";
+import Suggestions from "./components/Dashboards/Studentdashboard/Suggestions";
 
 function App() {
   return (
@@ -24,6 +27,9 @@ function App() {
         </Route>
         <Route path="/student-dashboard" element={<Index />}>
           <Route index element={<Home />} />
+          <Route path="attendance" element={<Attendance/>} />
+          <Route path="complaints" element={<Complaints/>} />
+          <Route path="suggestions" element={<Suggestions/>} />
         </Route>
       </Routes>
     </>
