@@ -73,6 +73,11 @@ const getStudent = async (req, res) => {
             // console.log(errors);
             return res.status(400).json({success, errors: errors.array() });
         }
+        const { isAdmin } = req.body;
+
+        if (isAdmin) {
+            return res.status(400).json({success, errors: [{ msg: 'Admin cannot access this route' }] });
+        }
 
         const { token } = req.body;
 
