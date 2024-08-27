@@ -1,8 +1,9 @@
 import { Input } from "./Input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export default function SignIn() {
+  let navigate = useNavigate();
   
   let login = async (event) => {
     event.preventDefault();
@@ -20,12 +21,10 @@ export default function SignIn() {
     });
 
     let result = await response.json();
-    console.log(result);
     if (result.success) {
-      localStorage.setItem("token", result.token);
-      localStorage.setItem("user", JSON.stringify(result.user));
-      alert("Login success");
-      // window.location.href = "/";
+      localStorage.setItem("token", result.data.token);
+      localStorage.setItem("user", JSON.stringify(result.data.user));
+      navigate("/student-dashboard");
     } else {
       alert(result.errors[0].msg);
     }
@@ -41,16 +40,11 @@ export default function SignIn() {
   const changePass = (event) => {
     setPass(event.target.value);
   };
-  const [position, setPosition] = useState("");
-  
-  const changePosition = (event) => {
-    setPosition(event.target.value);
-  };
 
   const iemail = {
     name: "email",
     type: "email",
-    placeholder: "000000",
+    placeholder: "abc@gmail.com",
     req: true,
     onChange: changeEmail,
   };
@@ -71,40 +65,6 @@ export default function SignIn() {
         <form className="space-y-4 md:space-y-6" onSubmit={login}>
           <Input field={iemail} />
           <Input field={password} />
-          {/* <div className="flex items-baseline gap-3">
-            <div className="flex items-center mb-4">
-              <input
-                type="radio"
-                value="student"
-                name="student-manager"
-                className="w-4 h-4 focus:ring-blue-600 ring-offset-gray-800  bg-gray-800 border-gray-600"
-                checked={position === "student"}
-                onChange={changePosition}
-              />
-              <label
-                htmlFor="default-radio-1"
-                className="ml-2 text-sm font-medium text-gray-300"
-              >
-                Student
-              </label>
-            </div>
-            <div className="flex items-center">
-              <input
-                type="radio"
-                value="manager"
-                name="student-manager"
-                className="w-4 h-4 text-blue-600 focus:ring-blue-600 ring-offset-gray-800 bg-gray-700 border-gray-600"
-                checked={position === "manager"}
-                onChange={changePosition}
-              />
-              <label
-                htmlFor="default-radio-2"
-                className="ml-2 text-sm font-medium text-gray-300"
-              >
-                Manager
-              </label>
-            </div>
-          </div> */}
           <div className="flex items-center justify-between">
             <div className="flex items-start">
               <div className="flex items-center h-5">

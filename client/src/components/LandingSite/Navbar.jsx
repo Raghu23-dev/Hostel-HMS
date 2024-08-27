@@ -1,4 +1,5 @@
 import { useState } from "react";
+import {Link} from "react-router-dom"
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -7,8 +8,7 @@ function Navbar() {
 
   return (
     <nav className="flex items-center justify-between p-6 bg-gradient-to-r from-gray-900 to-gray-800 text-white md:px-10">
-      <a
-        href="/"
+      <link to ="/"
         className="flex items-center z-10 text-xl font-bold lg:text-3xl text-yellow-500"
       >
         <svg
@@ -26,35 +26,32 @@ function Navbar() {
           />
         </svg>
         &nbsp; HMS
-      </a>
+      </link>
       <div
         className={`flex ${
           menuOpen ? mobileMenuStyles : "hidden"
         } md:flex gap-10`}
       >
-        <a
-          href="/auth/request"
+        <link to="/auth/request"
           className="md:bg-yellow-500 md:hover:bg-yellow-600 transition-colors duration-300 text-white font-bold md:py-3 md:px-6 md:rounded-full"
         >
           Request an Account
-        </a>
-        <a
-          href="/auth/admin-login"
+        </link>
+        <link to="/auth/admin-login"
           className={`md:bg-orange-500 md:hover:bg-orange-600 transition-colors duration-300 text-white font-bold md:py-3 md:px-6 md:rounded-full ${
             menuOpen ? "text-orange-400" : ""
           }`}
         >
           Login as Admin
-        </a>
+        </link>
 
-        <a
-          href="/auth/login"
+        <link to ="/auth/login"
           className={`md:bg-red-500 md:hover:bg-red-600 transition-colors duration-300 text-white font-bold md:py-3 md:px-6 md:rounded-full ${
             menuOpen ? "text-red-400" : ""
           }`}
         >
           Login as Student
-        </a>
+        </link>
       </div>
       <div
         className="md:hidden z-10 p-2"
