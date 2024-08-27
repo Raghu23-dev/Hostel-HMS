@@ -1,37 +1,30 @@
-import React from 'react';
-
-const colorChangeKeyframes = `
-  @keyframes colorChange {
-    0% { color: #ff0000; }   /* Red */
-    25% { color: #00ff00; }  /* Green */
-    50% { color: #0000ff; }  /* Blue */
-    75% { color: #ff00ff; }  /* Magenta */
-    100% { color: #ff0000; } /* Red */
-  }
-`;
-
-const style = {
-  animation: 'colorChange 5s infinite',
-};
+import { HeroSVG } from "./HeroSVG";
 
 function HeroSection() {
   return (
-    <main className="flex flex-col lg:flex-row-reverse justify-center items-center text-white text-center">
-      <style>{colorChangeKeyframes}</style>
+    <main className="flex flex-col lg:flex-row-reverse justify-center align-center  text-white text-center">
+      {/* <img src={heroImg} alt='nust-hostel-img' className='opacity-[0.05] absolute top-[50vh] left-[50vw] translate-x-[-50%] translate-y-[-50%] select-none' /> */}
+      <div className="w-[70%] pl-40 animate-pulse lg:w-[30%] lg:p-0">
+        <HeroSVG />
+      </div>
       <div className="md:pt-[8%]">
-        <h1 className="font-bold text-6xl" style={style}>
+        <h1 className="font-bold text-6xl">
           Hostel <span className="text-blue-500">Management</span> System
         </h1>
-        <div className="py-20 flex flex-col lg:flex-row justify-center gap-6">
+        <p className="py-10 text-2xl">
+          One Solution For All Of The Hostel&apos;s Needs
+        </p>
+        <div className="py-20">
           <a
             href="/auth/login"
-            className="bg-blue-500 py-3 px-8 hover:bg-blue-700 transition md:rounded-full text-2xl"
+            className="bg-blue-500 py-3 px-40 hover:bg-blue-700 transition rounded text-2xl"
           >
             Login
           </a>
+          <p className="mt-6 mb-3">OR</p>
           <a
             href="/auth/request"
-            className="bg-blue-500 py-3 px-8 hover:bg-blue-700 transition md:rounded-full text-2xl"
+            className="text-xl hover:underline hover:text-blue-500"
           >
             Request Registration
           </a>
@@ -40,5 +33,4 @@ function HeroSection() {
     </main>
   );
 }
-
 export { HeroSection };

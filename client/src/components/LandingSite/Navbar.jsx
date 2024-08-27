@@ -1,16 +1,13 @@
 import { useState } from "react";
-import {Link} from "react-router-dom"
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const mobileMenuStyles = `flex-col absolute top-0 left-0 w-full h-full bg-gray-900 text-white px-10 py-40 text-3xl font-bold space-y-6`;
+  const mobileMenuStyles = `flex-col absolute top-0 left-0 w-full h-full bg-gray px-10 bg-black py-40 text-5xl font-bold`;
 
   return (
-    <nav className="flex items-center justify-between p-6 bg-gradient-to-r from-gray-900 to-gray-800 text-white md:px-10">
-      <link to ="/"
-        className="flex items-center z-10 text-xl font-bold lg:text-3xl text-yellow-500"
-      >
+    <nav className="flex align-center justify-between p-10 text-white md:px-20">
+      <a href="/" className="flex z-10 md:py-3 font-bold text-xl lg:text-4xl">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -26,35 +23,35 @@ function Navbar() {
           />
         </svg>
         &nbsp; HMS
-      </link>
+      </a>
       <div
         className={`flex ${
           menuOpen ? mobileMenuStyles : "hidden"
-        } md:flex gap-10`}
+        } gap-10 md:flex`}
       >
-        <link to="/auth/request"
-          className="md:bg-yellow-500 md:hover:bg-yellow-600 transition-colors duration-300 text-white font-bold md:py-3 md:px-6 md:rounded-full"
+        <a
+          href="/auth/request"
+          className="md:py-3 md:hover:text-blue-500 transition-all ease-linear"
         >
-          Request an Account
-        </link>
-        <link to="/auth/admin-login"
-          className={`md:bg-orange-500 md:hover:bg-orange-600 transition-colors duration-300 text-white font-bold md:py-3 md:px-6 md:rounded-full ${
-            menuOpen ? "text-orange-400" : ""
+          Request
+        </a>
+        <a
+          href="/auth/admin-login"
+          className="md:py-3 md:hover:text-blue-500 transition-all ease-linear"
+        >
+          AdminLogin
+        </a>
+        <a
+          href="/auth/login"
+          className={`md:bg-blue-500 md:hover:bg-blue-700 transition md:text-white font-bold md:text-lg md:py-3 md:mb-3 md:px-8 md:rounded ${
+            menuOpen ? "text-blue-500" : ""
           }`}
         >
-          Login as Admin
-        </link>
-
-        <link to ="/auth/login"
-          className={`md:bg-red-500 md:hover:bg-red-600 transition-colors duration-300 text-white font-bold md:py-3 md:px-6 md:rounded-full ${
-            menuOpen ? "text-red-400" : ""
-          }`}
-        >
-          Login as Student
-        </link>
+          Login
+        </a>
       </div>
       <div
-        className="md:hidden z-10 p-2"
+        className="md:hidden z-10 py-1"
         onClick={() => setMenuOpen(!menuOpen)}
       >
         <svg
@@ -63,7 +60,7 @@ function Navbar() {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-8 h-8 text-yellow-500"
+          className="w-6 h-6"
         >
           <path
             strokeLinecap="round"
@@ -75,5 +72,4 @@ function Navbar() {
     </nav>
   );
 }
-
-export {Navbar};
+export { Navbar };
