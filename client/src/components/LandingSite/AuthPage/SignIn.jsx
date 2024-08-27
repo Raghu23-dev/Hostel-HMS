@@ -21,13 +21,30 @@ export default function SignIn() {
     });
 
     let result = await response.json();
+
     if (result.success) {
       localStorage.setItem("token", result.data.token);
-      localStorage.setItem("user", JSON.stringify(result.data.user));
-      navigate("/student-dashboard");
+      let student = await fetch("http://localhost:3000/api/student/get-student", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({token: result.data.token})
+      });
+
+      let studentResult = await student.json();
+      console.log(studentResult);
+      if (studentResult.success) {
+        localStorage.setItem("student", JSON.stringify(studentResult.student));
+        navigate("/student-dashboard");
+      } else {
+        alert(studentResult.errors[0].msg);
+        navigate("/auth/login");
+      }
     } else {
       alert(result.errors[0].msg);
     }
+
   };
 
   const [email, setEmail] = useState("");
@@ -56,35 +73,45 @@ export default function SignIn() {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto mt-10 rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 shadow-lg">
-      <div className="p-8 space-y-6">
-        <h1 className="text-2xl font-semibold text-white text-center">
+    <div className="w-full rounded-lg md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-gray-700">
+      <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl text-white">
           Sign in to your account
         </h1>
-        <form className="space-y-6" onSubmit={login}>
+        <form className="space-y-4 md:space-y-6" onSubmit={login}>
           <Input field={iemail} />
           <Input field={password} />
           <div className="flex items-center justify-between">
-            <label className="flex items-center space-x-2 text-gray-300">
-              <input
-                id="remember"
-                aria-describedby="remember"
-                type="checkbox"
-                className="w-4 h-4 rounded border-gray-600 focus:ring-blue-500 text-blue-500"
-              />
-              <span>Remember me</span>
-            </label>
+            <div className="flex items-start">
+              <div className="flex items-center h-5">
+                <input
+                  id="remember"
+                  aria-describedby="remember"
+                  type="checkbox"
+                  className="w-4 h-4 border rounded focus:ring-3 bg-gray-700 border-gray-600 focus:ring-blue-600 ring-offset-gray-800"
+                  required=""
+                />
+              </div>
+              <div className="ml-3 text-sm">
+                <label htmlFor="remember" className="text-gray-300">
+                  Remember me
+                </label>
+              </div>
+            </div>
           </div>
           <button
             type="submit"
-            className="w-full py-2.5 text-white bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg shadow-md transform transition-transform hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-500"
+            className="w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"
           >
             Sign in
           </button>
-          <p className="text-center text-sm text-gray-400">
+          <p className="text-sm font-light text-gray-400">
             Don’t have an account yet?{" "}
-            <Link to="request" className="text-blue-400 hover:underline">
-              Request an account
+            <Link
+              to="/auth/request"
+              className="font-medium hover:underline text-blue-500"
+            >
+              Request an account.
             </Link>
           </p>
         </form>
