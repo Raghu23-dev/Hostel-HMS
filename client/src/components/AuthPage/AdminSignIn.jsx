@@ -2,15 +2,15 @@ import { Input } from "./Input";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-export default function SignIn() {
-  const [inputCms, setInputCms] = useState("");
+export default function AdminSignIn() {
+  const [inputId, setInputId] = useState("");
   const [pass, setPass] = useState("");
 
-  const handleInputChange = (event) => setInputCms(event.target.value);
+  const handleInputChange = (event) => setInputId(event.target.value);
   const handlePassChange = (event) => setPass(event.target.value);
 
-  const cmsField = {
-    name: "CMS",
+  const idField = {
+    name: "ID",
     type: "number",
     placeholder: "000000",
     req: true,
@@ -29,10 +29,10 @@ export default function SignIn() {
     <div className="w-full rounded-lg sm:max-w-md bg-gray-800 border-gray-700">
       <div className="p-6 space-y-4">
         <h1 className="text-xl font-bold tracking-tight text-white">
-          Sign in to your account - Student
+          Sign in to your account - Manager
         </h1>
         <form className="space-y-4">
-          <Input field={cmsField} />
+          <Input field={idField} />
           <Input field={passwordField} />
           <div className="flex items-center justify-between">
             <input
@@ -51,9 +51,9 @@ export default function SignIn() {
             Sign in
           </button>
           <p className="text-sm font-light text-gray-400">
-            Don’t have an account yet?{" "}
-            <Link to="/auth/request" className="font-medium text-blue-500 hover:underline">
-              Request an account.
+            You're a student?{" "}
+            <Link to="/auth/login" className="font-medium text-blue-500 hover:underline">
+              SignIn Here.
             </Link>
           </p>
         </form>

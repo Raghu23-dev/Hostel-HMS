@@ -3,41 +3,35 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 export default function RequestAcc() {
+  const [inputCms, setInputCms] = useState("");
+  
+  const handleInputChange = (event) => setInputCms(event.target.value);
 
-  const [inputCms, setInputCms] = useState('');
-  const changeCms = (event) => {
-    setInputCms(event.target.value);
-  }
-
-
-  const cms = {
-    name: "cms",
+  const cmsField = {
+    name: "CMS",
     type: "number",
     placeholder: "000000",
     req: true,
-    onChange: changeCms,
-  }
+    onChange: handleInputChange,
+  };
 
   return (
-    <div className="w-full rounded-lg md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-gray-700">
-      <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-        <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl text-white">
-          Request account from Hostel Manager
+    <div className="w-full rounded-lg sm:max-w-md bg-gray-800 border-gray-700">
+      <div className="p-6 space-y-4">
+        <h1 className="text-xl font-bold tracking-tight text-white">
+          Request an account from Hostel Manager
         </h1>
-        <form className="space-y-4 md:space-y-6" action="#">
-          <Input field={cms} />
+        <form className="space-y-4">
+          <Input field={cmsField} />
           <button
             type="submit"
-            className="w-full text-white hover:bg-blue-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 focus:ring-blue-800"
+            className="w-full px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300"
           >
             Request
           </button>
           <p className="text-sm font-light text-gray-400">
             Already have an account?{" "}
-            <Link
-              to="/auth"
-              className="font-medium hover:underline text-blue-500"
-            >
+            <Link to="/auth" className="font-medium text-blue-500 hover:underline">
               Sign In
             </Link>
           </p>

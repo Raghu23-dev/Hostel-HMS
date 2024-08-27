@@ -7,7 +7,10 @@ export default function Navbar() {
 
   return (
     <nav className="flex items-center justify-between p-6 bg-gradient-to-r from-gray-900 to-gray-800 text-white md:px-10">
-      <a href="/" className="flex items-center z-10 text-xl font-bold lg:text-3xl text-yellow-500">
+      <a
+        href="/"
+        className="flex items-center z-10 text-xl font-bold lg:text-3xl text-yellow-500"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -24,21 +27,33 @@ export default function Navbar() {
         </svg>
         &nbsp; HMS
       </a>
-      <div className={`flex ${menuOpen ? mobileMenuStyles : "hidden"} md:flex gap-10`}>
-       
+      <div
+        className={`flex ${
+          menuOpen ? mobileMenuStyles : "hidden"
+        } md:flex gap-10`}
+      >
         <a
           href="/auth/request"
-          className="md:py-3 transition-colors duration-300 hover:text-yellow-400"
+          className="md:bg-yellow-500 md:hover:bg-yellow-600 transition-colors duration-300 text-white font-bold md:py-3 md:px-6 md:rounded-full"
         >
-          Request
+          Request an Account
         </a>
         <a
-          href="/auth/login"
-          className={`md:bg-yellow-500 md:hover:bg-yellow-600 transition-colors duration-300 text-gray-900 font-bold md:py-3 md:px-6 md:rounded-full ${
-            menuOpen ? "text-yellow-400" : ""
+          href="/auth/admin-login"
+          className={`md:bg-orange-500 md:hover:bg-orange-600 transition-colors duration-300 text-white font-bold md:py-3 md:px-6 md:rounded-full ${
+            menuOpen ? "text-orange-400" : ""
           }`}
         >
-          Login
+          Login as Admin
+        </a>
+
+        <a
+          href="/auth/login"
+          className={`md:bg-red-500 md:hover:bg-red-600 transition-colors duration-300 text-white font-bold md:py-3 md:px-6 md:rounded-full ${
+            menuOpen ? "text-red-400" : ""
+          }`}
+        >
+          Login as Student
         </a>
       </div>
       <div
