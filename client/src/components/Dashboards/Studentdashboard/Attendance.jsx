@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 
 function Attendance() {
-  const [daysOff, setDaysOff] = useState(5); 
+  const [daysOff, setDaysOff] = useState(5); //!Fetch from database
   const [thisWeek, setThisWeek] = useState([
     { name: "Monday", present: true },
     { name: "Tuesday", present: false }
-  ]); 
+  ]); //!Fetch from database
 
   let totalDays = new Date();
   totalDays = totalDays.getDate();

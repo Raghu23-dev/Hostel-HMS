@@ -1,16 +1,22 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import LandingSite from "./components/LandingSite/Index";
-import LandingPage from "./components/LandingSite/LandingPage/index";
+import LandingPage from "./components/LandingSite/LandingPage/index"
 import Auth from "./components/LandingSite/AuthPage/Index";
 import SignIn from "./components/LandingSite/AuthPage/SignIn";
 import RequestAcc from "./components/LandingSite/AuthPage/Request";
 import AdminSignIn from "./components/LandingSite/AuthPage/AdminSignIn";
 import Index from "./components/Dashboards/StudentDashboard/Index";
 import Home from "./components/Dashboards/StudentDashboard/Home";
-import Attendance from "./components/Dashboards/Studentdashboard/Attendance";
-import Complaints from "./components/Dashboards/Studentdashboard/Complaints";
-import Suggestions from "./components/Dashboards/Studentdashboard/Suggestions";
+import Mess from "./components/Dashboards/StudentDashboard/Mess";
+import Attendance from "./components/Dashboards/StudentDashboard/Attendance";
+import Invoices from "./components/Dashboards/StudentDashboard/Invoices";
+import Suggestions from "./components/Dashboards/StudentDashboard/Suggestions";
+import Complaints from "./components/Dashboards/StudentDashboard/Complaints";
+import Settings from "./components/Dashboards/StudentDashboard/Settings";
+import AdminIndex from "./components/Dashboards/AdminDashboard/Index";
+import AdminHome from "./components/Dashboards/AdminDashboard/Home"
+import RegisterStudent from "./components/Dashboards/AdminDashboard/RegisterStudent";
 
 function App() {
   return (
@@ -27,9 +33,16 @@ function App() {
         </Route>
         <Route path="/student-dashboard" element={<Index />}>
           <Route index element={<Home />} />
-          <Route path="attendance" element={<Attendance />} />
-          <Route path="complaints" element={<Complaints />} />
-          <Route path="suggestions" element={<Suggestions />} />
+          <Route path="mess" element={<Mess />  } />
+          <Route path="attendance" element={<Attendance/>} />
+          <Route path="complaints" element={<Complaints/>} />
+          <Route path="suggestions" element={<Suggestions/>} />
+          <Route path="invoices" element={<Invoices/>} />
+          <Route path="settings" element={<Settings/>} />
+        </Route>
+        <Route path="/admin-dashboard" element={<AdminIndex />}>
+          <Route index element={<AdminHome />} />
+          <Route path='register-student' element={<RegisterStudent />} />
         </Route>
       </Routes>
     </>

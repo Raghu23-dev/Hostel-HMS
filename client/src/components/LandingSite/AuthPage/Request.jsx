@@ -3,36 +3,41 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 export default function RequestAcc() {
-  const [inputCms, setInputCms] = useState("");
+
+  const [inputCms, setInputCms] = useState('');
   const changeCms = (event) => {
     setInputCms(event.target.value);
-  };
+  }
+
 
   const cms = {
     name: "cms",
     type: "number",
-    placeholder: "Enter your CMS ID",
+    placeholder: "000000",
     req: true,
     onChange: changeCms,
-  };
+  }
 
   return (
-    <div className="w-full max-w-md mx-auto mt-10 rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 shadow-lg">
-      <div className="p-8 space-y-6">
-        <h1 className="text-2xl font-semibold text-white text-center">
-          Request Account from Hostel Manager
+    <div className="w-full rounded-lg md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-gray-700">
+      <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl text-white">
+          Request account from Hostel Manager
         </h1>
-        <form className="space-y-6">
+        <form className="space-y-4 md:space-y-6" action="#">
           <Input field={cms} />
           <button
             type="submit"
-            className="w-full py-2.5 text-white bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg shadow-md transform transition-transform hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-500"
+            className="w-full text-white hover:bg-blue-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 focus:ring-blue-800"
           >
             Request
           </button>
-          <p className="text-center text-sm text-gray-400">
+          <p className="text-sm font-light text-gray-400">
             Already have an account?{" "}
-            <Link to="/auth" className="text-blue-400 hover:underline">
+            <Link
+              to="/auth"
+              className="font-medium hover:underline text-blue-500"
+            >
               Sign In
             </Link>
           </p>

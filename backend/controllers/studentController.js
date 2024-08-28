@@ -53,7 +53,7 @@ const registerStudent = async (req, res) => {
 
         await student.save();
 
-        const token = generateToken(user.id,user.isAdmin);
+        const token = generateToken(user.id, user.isAdmin);
 
         success = true;
         res.json({success, token, student });
@@ -73,6 +73,7 @@ const getStudent = async (req, res) => {
             // console.log(errors);
             return res.status(400).json({success, errors: errors.array() });
         }
+
         const { isAdmin } = req.body;
 
         if (isAdmin) {
@@ -80,10 +81,11 @@ const getStudent = async (req, res) => {
         }
 
         const { token } = req.body;
+        
+        const decoded = verifyToken(token);
 
-      const decoded = verifyToken(token);
-      const student = await Student.findOne({user: decoded.userId}).select('-password');
-
+        const student = await Student.findOne({user: decoded.userId}).select('-password');
+        
         if (!student) {
             return res.status(400).json({success, errors: [{ msg: 'Student does not exist' }] });
         }
