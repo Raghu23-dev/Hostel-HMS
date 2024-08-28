@@ -1,7 +1,7 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import LandingSite from "./components/LandingSite/Index";
-import LandingPage from "./components/LandingSite/LandingPage/index"
+import LandingPage from "./components/LandingSite/LandingPage/index";
 import Auth from "./components/LandingSite/AuthPage/Index";
 import SignIn from "./components/LandingSite/AuthPage/SignIn";
 import RequestAcc from "./components/LandingSite/AuthPage/Request";
@@ -27,9 +27,9 @@ function App() {
         </Route>
         <Route path="/student-dashboard" element={<Index />}>
           <Route index element={<Home />} />
-          <Route path="attendance" element={<Attendance/>} />
-          <Route path="complaints" element={<Complaints/>} />
-          <Route path="suggestions" element={<Suggestions/>} />
+          <Route path="attendance" element={<Attendance />} />
+          <Route path="complaints" element={<Complaints />} />
+          <Route path="suggestions" element={<Suggestions />} />
         </Route>
       </Routes>
     </>
