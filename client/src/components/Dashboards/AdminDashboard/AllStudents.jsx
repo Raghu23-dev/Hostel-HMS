@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAllStudents } from "../../../utils";
+import { getAllStudents } from "../../utils";
 function AllStudents() {
   const getAll = async () => {
     const data = await getAllStudents();
