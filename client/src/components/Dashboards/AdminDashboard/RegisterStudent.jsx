@@ -34,7 +34,17 @@ function RegisterStudent() {
       const data = await res.json();
 
       if (data.success) {
-        alert("Student registered successfully");
+        // toast.success(
+        //   'Student ' + data.student.name + ' Registered Successfully!', {
+        //   position: "top-right",
+        //   autoClose: 3000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: "dark",
+        // })
         setCms("");
         setName("");
         setRoomNo("");
@@ -76,7 +86,6 @@ function RegisterStudent() {
   const [password, setPassword] = useState();
 
   const [loading, setLoading] = useState(false);
-  
 
   return (
     <div className="w-full max-h-screen pt-20 flex flex-col items-center justify-center">

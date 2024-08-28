@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
-const { registerStudent, getStudent, getAllStudents, updateStudent, deleteStudent } = require('../controllers/studentController');
+const { registerStudent, getStudent, getAllStudents, updateStudent, deleteStudent,csvStudent } = require('../controllers/studentController');
 
 
 // @route  POST api/student/register-student
@@ -64,7 +64,12 @@ router.post('/update-student', [
 router.delete('/delete-student', [
     check('id', 'Enter a valid ID').not().isEmpty(),
 ], deleteStudent);
-
+// @route  POST api/student/csv
+// @desc   Get CSV of students
+// @access Public
+router.post('/csv', [
+    check('hostel', 'Hostel is required').not().isEmpty()
+], csvStudent);
 
 
 module.exports = router;
