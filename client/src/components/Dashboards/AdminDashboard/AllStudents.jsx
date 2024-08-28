@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAllStudents } from "../../utils";
+import { getAllStudents } from "../../../utils";
 import { ToastContainer ,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -93,6 +93,7 @@ function AllStudents() {
         <button
           onClick={getCSV}
           target="_blank"
+          // eslint-disable-next-line react/no-unknown-property
           download={true}
           className="px-20 py-3 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl shadow-xl"
         >
@@ -184,7 +185,8 @@ function AllStudents() {
                     rtl={false}
                     pauseOnFocusLoss
                     draggable
-                    pauseOnHover/>
+                    pauseOnHover
+                    theme="dark"/>
 
                 </div>
               </div>
