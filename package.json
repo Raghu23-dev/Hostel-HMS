@@ -9,5 +9,8 @@
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "email-js": "^2.0.3"
+  }
 }
