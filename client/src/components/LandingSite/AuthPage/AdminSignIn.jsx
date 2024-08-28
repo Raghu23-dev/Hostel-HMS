@@ -170,15 +170,7 @@ export default function AdminSignIn() {
             pauseOnHover
             theme="dark"
           />
-          <p className="text-sm font-light text-gray-400">
-            You&apos;re a student?{" "}
-            <Link
-              to="/auth/login"
-              className="font-medium hover:underline text-blue-500"
-            >
-              Signin Here.
-            </Link>
-          </p>
+         
         </form>
       </div>
     </div>
