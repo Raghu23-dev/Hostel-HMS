@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "email-js": "^2.0.3"
+    "email-js": "^2.0.3",
+    "react-svg": "^16.1.34"
   }
 }
