@@ -1,43 +1,80 @@
 import { useState } from "react";
+import hmsVideo from "../../assets/HMS.mp4"; // Import the video file
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const mobileMenuStyles = `flex-col absolute top-0 left-0 w-full h-full bg-black py-40 text-2xl font-bold space-y-6`;
-
   return (
-    <nav className="flex items-center justify-between p-6 bg-gray-900 text-white">
-      <a href="/" className="flex items-center font-bold text-xl lg:text-3xl">
-        HMS
+    <nav className="relative flex items-center justify-between px-6 py-4 bg-custom-dark text-white shadow-md">
+      {/* Logo - Video */}
+      <a href="/" className="flex items-center overflow-hidden">
+        <video
+          src={hmsVideo}
+          className="h-16 w-40 object-cover transform scale-150" // Increased size and zoom
+          autoPlay
+          loop
+          muted
+        />
       </a>
-      <div
-        className={`flex gap-6 md:flex ${menuOpen ? mobileMenuStyles : "hidden"}`}
-      >
-        <a
-          href="/auth/request"
-          className="py-3 px-6 text-center bg-blue-500 hover:bg-blue-700 text-white rounded-lg transition-transform transform hover:scale-105"
-        >
-          Request
-        </a>
+
+      {/* Desktop Menu */}
+      <div className="hidden md:flex gap-6 items-center">
         <a
           href="/auth/admin-login"
-          className="py-3 px-6 text-center bg-blue-500 hover:bg-blue-700 text-white rounded-lg transition-transform transform hover:scale-105"
+          className="py-2 px-4 text-center bg-blue-500 hover:bg-blue-700 text-white rounded-md transition transform hover:scale-105 shadow"
         >
           Admin Login
         </a>
         <a
           href="/auth/login"
-          className="py-3 px-6 text-center bg-blue-500 hover:bg-blue-700 text-white rounded-lg transition-transform transform hover:scale-105"
+          className="py-2 px-4 text-center bg-blue-500 hover:bg-blue-700 text-white rounded-md transition transform hover:scale-105 shadow"
         >
-          Login
+          Student Login
         </a>
       </div>
-      <div
-        className="md:hidden z-10"
+
+      {/* Mobile Menu Button */}
+      <button
+        className="md:hidden z-20 focus:outline-none"
         onClick={() => setMenuOpen(!menuOpen)}
       >
-        {/* Placeholder for menu icon */}
-        <div className="w-6 h-6 bg-gray-600 rounded"></div>
+        <div className="w-6 h-6 flex flex-col justify-between items-center">
+          <span
+            className={`block h-1 w-full bg-white transform transition duration-300 ${
+              menuOpen ? "rotate-45 translate-y-2" : ""
+            }`}
+          />
+          <span
+            className={`block h-1 w-full bg-white transition duration-300 ${
+              menuOpen ? "opacity-0" : ""
+            }`}
+          />
+          <span
+            className={`block h-1 w-full bg-white transform transition duration-300 ${
+              menuOpen ? "-rotate-45 -translate-y-2" : ""
+            }`}
+          />
+        </div>
+      </button>
+
+      {/* Mobile Menu */}
+      <div
+        className={`${
+          menuOpen ? "flex" : "hidden"
+        } flex-col items-center justify-center absolute top-0 left-0 w-full h-screen bg-custom-dark text-white md:hidden transition-transform duration-300`}
+      >
+        <a
+          href="/auth/admin-login"
+          className="py-3 px-6 text-center bg-blue-500 hover:bg-blue-700 text-white rounded-md transition duration-200 transform hover:scale-105 shadow mb-4"
+        >
+          Admin Login
+        </a>
+        <a
+          href="/auth/login"
+          className="py-3 px-6 text-center bg-blue-500 hover:bg-blue-700 text-white rounded-md transition duration-200 transform hover:scale-105 shadow"
+        >
+          Student Login
+        </a>
       </div>
     </nav>
   );

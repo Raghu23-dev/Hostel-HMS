@@ -13,6 +13,8 @@
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "email-js": "^2.0.3",
+    "icons": "^1.0.0",
+    "react": "^18.3.1",
     "react-svg": "^16.1.34"
   }
 }

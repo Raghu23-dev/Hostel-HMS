@@ -4,7 +4,9 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}", // Include all React component files
   ],
   theme: {
-    extend: {},
+    extend: {colors: {
+      'custom-dark': '#121822',
+    },},
   },
   plugins: [],
 }
