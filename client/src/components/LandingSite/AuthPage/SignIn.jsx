@@ -15,7 +15,7 @@ export default function SignIn() {
   let login = async (event) => {
     event.preventDefault();
     let data = {
-      email: email,
+      email: email, 
       password: pass,
     };
 

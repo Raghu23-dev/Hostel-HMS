@@ -1,51 +1,93 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function MessOff() {
-  const [newReqs, setNewReqs] = useState([
-    {
-      from: "29-5-2023",
-      to: "31-5-2023",
-      student: {
-        id: 10,
-        name: "Abdul Ahad",
-        room_no: 29,
+  const getRequests = async () => {
+    const hostel = JSON.parse(localStorage.getItem("hostel"));
+    console.log(hostel);
+    const res = await fetch("http://localhost:3000/api/messoff/list", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-      status: "pending",
-    },
-    {
-      from: "29-5-2023",
-      to: "31-5-2023",
-      status: "pending",
-      student: {
-        id: 12,
-        name: "Danish Azeem",
-        room_no: 31,
+      body: JSON.stringify({ hostel: hostel._id }),
+    });
+    const data = await res.json();
+    console.log(data);
+    if (data.success) {
+      data.list.map((req) => {
+        req.id = req._id;
+        req.from = new Date(req.leaving_date).toDateString().slice(4, 10);
+        req.to = new Date(req.return_date).toDateString().slice(4, 10);
+        req._id = req.student._id;
+        req.student.name = req.student.name;
+        req.student.room_no = req.student.room_no;
+        req.status = req.status;
+      });
+      setNewReqs(data.list);
+      setApprovedReqs(data.approved);
+      setRejectedReqs(data.rejected);
+      graphData.current = [
+        approvedReqs,
+        rejectedReqs,
+        newReqs.length,
+      ];
+    }
+  };
+
+  const updateRequest = async (id, status) => {
+    const res = await fetch("http://localhost:3000/api/messoff/update", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    },
-  ]);
-  const [approvedReqs, setApprovedReqs] = useState([]);
-  const [rejectedReqs, setRejectedReqs] = useState([]);
+      body: JSON.stringify({ id, status }),
+    });
+    const data = await res.json();
+    console.log(data);
+    if (data.success) {
+      let student = newReqs.find((req) => req.id === id).student;
+      toast.success(
+        `Request from ${student.name} has been ${status}`,
+        {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+        }
+      );
+    }
+    else{
+      toast.error("Something went wrong", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+      })
+    }
+  };
+
+  const [newReqs, setNewReqs] = useState([]);
+  const [approvedReqs, setApprovedReqs] = useState(0);
+  const [rejectedReqs, setRejectedReqs] = useState(0);
   const graphData = useRef([
-      approvedReqs.length,
-      rejectedReqs.length,
+      approvedReqs,
+      rejectedReqs,
       newReqs.length,
   ]);
 
   const approve = (id) => {
-    const student = newReqs.find((req) => req.student.id === id);
-    student.status = "approved";
-    setNewReqs((newReqs) => newReqs.filter((req) => req.student.id !== id));
-    setApprovedReqs(newReqs.filter((req) => req.student === student));
-    graphData.current[0] += 1;
+    setNewReqs((newReqs) => newReqs.filter((req) => req.id !== id));
+    updateRequest(id, "approved");
 };
 
 const reject = (id) => {
-    const student = newReqs.find((req) => req.student.id === id);
-    student.status = "rejected";
-    setNewReqs((newReqs) => newReqs.filter((req) => req.student.id !== id));
-    setRejectedReqs(newReqs.filter((req) => req.student === student));
-    graphData.current[1] += 1;
+    setNewReqs((newReqs) => newReqs.filter((req) => req.id !== id));
+    updateRequest(id, "rejected");
   };
 
   const graph = (
@@ -66,6 +108,9 @@ const reject = (id) => {
     />
   );
 
+  useEffect(() => {
+    getRequests();
+  }, [newReqs.length, approvedReqs, rejectedReqs]);
   return (
     <div className="w-full h-screen flex flex-col gap-3 items-center justify-center">
       <h1 className="text-white font-bold text-5xl">Manage Mess</h1>
@@ -79,7 +124,7 @@ const reject = (id) => {
             newReqs.map((req) => (
               <li
                 className="group py-3 px-5 rounded sm:py-4 hover:bg-neutral-700 hover:shadow-xl hover:scale-105 transition-all cursor-pointer"
-                key={req.student._id}
+                key={req.id}
               >
                 <div className="flex items-center space-x-4">
                   <div className="flex-shrink-0 text-white">
@@ -109,7 +154,7 @@ const reject = (id) => {
                   <div className="flex gap-3">
                     <button
                       className="group/show relative z-0"
-                      onClick={() => approve(req.student.id)}
+                      onClick={() => approve(req.id)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -133,7 +178,7 @@ const reject = (id) => {
                     </button>
                     <button
                       className="group/show relative z-0"
-                      onClick={() => reject(req.student.id)}
+                      onClick={() => reject(req.id)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -161,6 +206,18 @@ const reject = (id) => {
             ))
           )}
         </ul>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={true}
+          closeOnClick={true}
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable={true}
+          pauseOnHover={false}
+          theme="dark"
+        />
       </div>
     </div>
   );
