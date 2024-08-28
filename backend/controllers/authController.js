@@ -7,11 +7,10 @@ exports.login = async (req, res, next) => {
     let success = false;
     try {
         const errors = validationResult(req);
-
         if (!errors.isEmpty()) {
             return res.status(400).json({success, errors: errors.array() });
         }
-
+        
         const { email, password } = req.body;
 
         try {
@@ -25,9 +24,7 @@ exports.login = async (req, res, next) => {
             if (!isMatch) {
                 return res.status(400).json({success, errors: [{ msg: 'Invalid credentials' }] });
             }
-
-            const token = generateToken(user.id,user.isAdmin);
-
+            const token = generateToken(user.id, user.isAdmin);
             res.status(200).json({
                 success: true,
                 data: {
@@ -49,3 +46,25 @@ exports.login = async (req, res, next) => {
         next(error);
     }
 };
+
+
+
+exports.verifySession = async (req, res, next) => {
+    let success = false;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({errors: errors.array(), success});
+    }
+    try {
+        const { token } = req.body;
+        const decoded = verifyToken(token);
+        if (decoded) {
+            success = true;
+            return res.status(200).json({success, data: decoded});
+        }
+        return res.status(400).json({success, "message": "Invalid token"});
+    } catch (err) {
+        console.error(err.message);
+        return res.status(500).json({success, "message": "Server Error"});
+    }
+}
