@@ -1,5 +1,5 @@
 import { useState } from "react";
-import hmsVideo from "../../assets/HMS.mp4"; // Import the video file
+import hmsVideo from "../../assets/HMS.mp4"; 
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);

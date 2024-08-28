@@ -1,104 +1,66 @@
-import React from "react";
-
-// Define the keyframes and text gradient styles using inline CSS
+import React, { useRef, useEffect } from 'react';
+import heroVideo from "../../../assets/Hero.mp4";
+// Define styles for the HeroSection
 const styles = {
-  textGradient: {
-    background: 'linear-gradient(90deg, #ff0081, #ff8c00, #00d084, #00aaff)',
-    backgroundClip: 'text',
-    WebkitBackgroundClip: 'text',
-    color: 'transparent',
-    animation: 'gradientText 2s linear infinite',
-  },
   container: {
-    height: '82vh', // Full viewport height
-    background: 'linear-gradient(to bottom right, #0f172a, #1e293b)',
+    height: '90vh', // Full viewport height
+    width: '100vw',  // Full viewport width
+    position: 'relative',
+    overflow: 'hidden',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'column',
     textAlign: 'center',
     color: 'white',
-    padding: '0 1rem',
-    boxSizing: 'border-box',
+    overflow: 'hidden',
+  },
+  video: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    width: '120%', // Scale the width to create a zoom-out effect
+    height: '120%', // Scale the height to create a zoom-out effect
+    objectFit: 'cover',
+    transform: 'translate(-50%, -50%) scale(1)', // Center the video and apply zoom-out effect
+    zIndex: -1,
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    background: 'rgba(0, 0, 0, 0.5)', // Optional overlay for better text visibility
+    zIndex: 1,
   },
   heading: {
     fontSize: '3rem',
     marginBottom: '1.5rem',
     fontWeight: 'bold',
     textTransform: 'uppercase',
-  },
-  buttonContainer: {
-    display: 'flex',
-    gap: '1rem',
-    justifyContent: 'center',
-    marginTop: '2rem',
-  },
-  button: {
-    padding: '1rem 2rem',
-    fontSize: '1rem',
-    borderRadius: '0.5rem',
-    fontWeight: '600',
-    textDecoration: 'none',
-    transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
-    display: 'inline-block',
-  },
-  loginButton: {
-    backgroundColor: '#3b82f6',
-    color: 'white',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-  },
-  requestButton: {
-    backgroundColor: 'transparent',
-    border: '2px solid #3b82f6',
-    color: '#3b82f6',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    zIndex: 2,
   },
 };
-
-// Keyframes for gradient text animation
-const gradientTextKeyframes = `
-@keyframes gradientText {
-  0% { color: #ff0081; }
-  25% { color: #ff8c00; }
-  50% { color: #00d084; }
-  75% { color: #00aaff; }
-  100% { color: #ff0081; }
-}
-`;
-
-// Add keyframes to the document head
-const addKeyframes = () => {
-  const style = document.createElement('style');
-  style.type = 'text/css';
-  style.appendChild(document.createTextNode(gradientTextKeyframes));
-  document.head.appendChild(style);
-};
-
-// Execute keyframes addition
-addKeyframes();
 
 function HeroSection() {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 1.5; // Adjust this value to change video speed
+    }
+  }, []);
+
   return (
     <main style={styles.container}>
-      <h1 style={{ ...styles.heading, ...styles.textGradient }}>
-        Hostel <span style={{ color: '#3b82f6' }}>Management</span> System
-      </h1>
-      <div style={styles.buttonContainer}>
-        <a
-          href="/auth/login"
-          style={{ ...styles.button, ...styles.loginButton }}
-          className="hover:scale-105 hover:shadow-lg"
-        >
-          Login
-        </a>
-        <a
-          href="/auth/request"
-          style={{ ...styles.button, ...styles.requestButton }}
-          className="hover:scale-105 hover:shadow-lg"
-        >
-          Request Registration
-        </a>
-      </div>
+      <video
+        ref={videoRef}
+        src={heroVideo}
+        autoPlay
+        loop
+        muted
+        style={styles.video}
+      />
     </main>
   );
 }
