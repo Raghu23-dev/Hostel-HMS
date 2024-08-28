@@ -1,235 +1,218 @@
-import { useEffect, useState } from "react";
-import { Input } from "../../LandingSite/AuthPage/Input";
+import { useState, useEffect, useRef } from "react";
+import { Line } from "react-chartjs-2";
+
 function Complaints() {
+  const allComplaints = useRef([{}]);
+  const unsolvedComplaints = useRef([{}]);
+  const resolvedComplaints = useRef([{}]);
 
-  const [loading, setLoading] = useState(false);
-
-  const registerComplaint = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    let student = JSON.parse(localStorage.getItem("student"));
-    const complaint = {
-      student: student._id,
-      hostel: student.hostel,
-      title: title,
-      description: desc,
-      type: type,
-    };
-
-    const res = await fetch("http://localhost:3000/api/complaint/register", {
+  const getComplaints = async () => {
+    const hostel = JSON.parse(localStorage.getItem("hostel"))._id;
+    const response = await fetch(`http://localhost:3000/api/complaint/hostel`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(complaint),
+      body: JSON.stringify({ hostel }),
     });
 
-    const data = await res.json();
-
+    const data = await response.json();
     if (data.success) {
-      alert("Complaint registered successfully");
-      setTitle("");
-      setDesc("");
-      setType("Electric");
-    } else {
-      alert(data.message);
-    }
-    setLoading(false);
-  };
-
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
-  const [type, setType] = useState("Electric");
-
-  const types = ["Electric", "Furniture", "Cleaning", "Others"];
-
-  function chngType(e) {
-    setType(e.target.value);
-  }
-
-  function titleChange(e) {
-    setTitle(e.target.value);
-  }
-  function descChange(e) {
-    setDesc(e.target.value);
-  }
-
-  const complaintTitle = {
-    name: "complaint title",
-    placeholder: "Title",
-    req: true,
-    type: "text",
-    value: title,
-    onChange: titleChange,
-  };
-  const complaintType = {
-    name: "complaint type",
-    placeholder: "Type...",
-    req: true,
-    type: "text",
-    value: type,
-    onChange: chngType,
-  };
-
-  const [regComplaints, setRegComplaints] = useState([
-    {
-      title: "Title",
-      status: "Pending",
-      date: "DD-MM-YYYY",
-      type: "Type",
-    },
-  ]);
-
-  
-  useEffect(()=> {
-    const student = JSON.parse(localStorage.getItem("student"));
-    const cmpln = { student: student._id };
-    const fetchComplaints = async () => {
-      const res = await fetch("http://localhost:3000/api/complaint/student", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(cmpln),
-      });
-      const data = await res.json();
-      let complaints = data.complaints;
-      complaints = complaints.map((complaint) => {
-        var date = new Date(complaint.date);
-        complaint.date = date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
-        return {
-          title: complaint.title,
-          status: complaint.status,
-          date: complaint.date,
+      const complaints = [];
+      data.complaints.map((complaint) => {
+        let date = new Date(complaint.date);
+        complaints.unshift({
+          id: complaint._id,
           type: complaint.type,
-        };
+          title: complaint.title,
+          desc: complaint.description,
+          student: complaint.student.name,
+          room: complaint.student.room_no,
+          status: complaint.status,
+          date: date.toLocaleDateString("en-US", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          }),
+        });
       });
-      setRegComplaints(data.complaints);
-    }
-    fetchComplaints();
-  }, [regComplaints])
+      allComplaints.current = complaints;
+      const resolved = resolvedComplaints.current.filter(
+        (complaint) => complaint.status !== "pending"
+      );
+      resolvedComplaints.current = resolved;
+      unsolvedComplaints.current = complaints.filter(
+        (complaint) => complaint.status === "pending"
+      );
+    } else console.log(data.message);
+  };
 
+  const dismissComplaint = (id) => {
+    fetch(`http://localhost:3000/api/complaint/resolve`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          getComplaints();
+        } else {
+          console.log(data);
+        }
+      });
+  };
+
+  const [graphData, setGraphData] = useState([0, 0, 0, 0, 0, 0, 0]);
+
+  useEffect(() => {
+    getComplaints();
+    const dates = [
+      new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toLocaleDateString(
+        "en-US",
+        { day: "numeric", month: "long", year: "numeric" }
+      ),
+      new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toLocaleDateString(
+        "en-US",
+        { day: "numeric", month: "long", year: "numeric" }
+      ),
+      new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toLocaleDateString(
+        "en-US",
+        { day: "numeric", month: "long", year: "numeric" }
+      ),
+      new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toLocaleDateString(
+        "en-US",
+        { day: "numeric", month: "long", year: "numeric" }
+      ),
+      new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toLocaleDateString(
+        "en-US",
+        { day: "numeric", month: "long", year: "numeric" }
+      ),
+      new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toLocaleDateString(
+        "en-US",
+        { day: "numeric", month: "long", year: "numeric" }
+      ),
+      new Date(Date.now() - 0 * 24 * 60 * 60 * 1000).toLocaleDateString(
+        "en-US",
+        { day: "numeric", month: "long", year: "numeric" }
+      ),
+    ];
+
+    const labels = dates.map((date) => date);
+    setGraphData(
+      labels.map(
+        (date) =>
+          allComplaints.current.filter((complaint) => complaint.date === date)
+            .length
+      )
+    );
+  }, [allComplaints, unsolvedComplaints, resolvedComplaints]);
+
+  const graph = (
+    <div className="flex items-center justify-center md:h-64 h-40 md:w-96 w-full">
+      <Line
+        data={{
+          labels: [
+            new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toLocaleDateString(
+              "en-US",
+              { day: "numeric", month: "long", year: "numeric" }
+            ),
+            new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toLocaleDateString(
+              "en-US",
+              { day: "numeric", month: "long", year: "numeric" }
+            ),
+            new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toLocaleDateString(
+              "en-US",
+              { day: "numeric", month: "long", year: "numeric" }
+            ),
+            new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toLocaleDateString(
+              "en-US",
+              { day: "numeric", month: "long", year: "numeric" }
+            ),
+            new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toLocaleDateString(
+              "en-US",
+              { day: "numeric", month: "long", year: "numeric" }
+            ),
+            new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toLocaleDateString(
+              "en-US",
+              { day: "numeric", month: "long", year: "numeric" }
+            ),
+            new Date(Date.now() - 0 * 24 * 60 * 60 * 1000).toLocaleDateString(
+              "en-US",
+              { day: "numeric", month: "long", year: "numeric" }
+            ),
+          ],
+          datasets: [
+            {
+              label: "No. of Complaints",
+              pointHoverBackgroundColor: "orange",
+              data: graphData,
+            },
+          ],
+        }}
+        options={{
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
+        }}
+      />
+    </div>
+  );
 
   return (
-    <div className="w-full h-screen flex flex-col gap-10 items-center justify-center md:p-0 px-10">
-      <h1 className="text-white font-bold text-5xl mt-10">Complaints</h1>
-      <div className="flex gap-5">
-        <form
-          method="POST"
-          onSubmit={registerComplaint}
-          className="md:w-[30vw] w-full py-5 pb-7 px-10 bg-neutral-950 rounded-lg shadow-xl flex flex-col gap-5"
-        >
-          <div>
-            <label
-              htmlFor="description"
-              className="block mb-2 text-sm font-medium text-white"
-            >
-              Your complaint type
-            </label>
-            <select
-              className="border sm:text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 outline-none"
-              onChange={chngType}
-            >
-              {types.map((type) => (
-                <option key={type}>{type}</option>
-              ))}
-            </select>
-            {type.toLowerCase() === "electric" ||
-            type.toLowerCase() === "furniture" ||
-            type.toLowerCase() === "cleaning" ? (
-              <></>
-            ) : (
-              <div className="mt-5">
-                <Input field={complaintType} />
-              </div>
-            )}
-          </div>
-          <Input field={complaintTitle} />
-          <div>
-            <label
-              htmlFor="description"
-              className="block mb-2 text-sm font-medium text-white"
-            >
-              Your complaint description
-            </label>
-            <textarea
-              name="description"
-              placeholder="Details of complaint"
-              className="border sm:text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 outline-none"
-              onChange={descChange}
-              value={desc}
-            ></textarea>
-            <button
-              type="submit"
-              className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-800 text-lg rounded-lg px-5 py-2.5 mt-5 text-center"
-              disabled={loading}
-            >
-              {loading ? 'Registering Complaint...':'Register Complaint'}
-            </button>
-          </div>
-        </form>
-        <div className="w-80 max-w-md max-h-96 p-4 border rounded-lg shadow sm:p-8 bg-neutral-950 border-neutral-900 drop-shadow-xl overflow-y-auto">
-          <div className="flex items-center justify-between mb-4">
-            <h5 className="text-xl font-bold leading-none text-white">
-              Registered Complaints
-            </h5>
-          </div>
-          <div className="flow-root">
-            <ul role="list" className="divide-y divide-gray-700 text-white ">
-              {regComplaints.length === 0
-                ? "No complaints registered"
-                : regComplaints.map((complain) => (
-                    <li className="py-3 sm:py-4" key={complain.title}>
-                      <div className="flex items-center space-x-4">
-                        <div className="flex-shrink-0 text-white">
-                          {complain.status.toLowerCase() === "pending" ? (
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth={2}
-                              stroke="currentColor"
-                              className="w-7 h-7"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
-                              />
-                            </svg>
-                          ) : (
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth={1.5}
-                              stroke="currentColor"
-                              className="w-6 h-6"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4.5 12.75l6 6 9-13.5"
-                              />
-                            </svg>
-                          )}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium truncate text-white">
-                            {complain.title}
-                          </p>
-                          <p className="text-sm truncate text-gray-400">
-                            {complain.date}
-                          </p>
-                        </div>
-                        <div className="flex flex-col items-center text-base font-semibold text-white">
-                          {complain.type}
-                        </div>
+    <div className="w-full h-screen flex flex-col gap-10 md:gap-7 pt-32 items-center justify-center overflow-auto">
+      <h1 className="text-white font-bold text-5xl">Complaints</h1>
+      <div className="flex md:gap-7 flex-wrap justify-center items-center gap-7">
+        {graph}
+        <div className="bg-neutral-950 px-10 py-5 rounded-xl shadow-xl w-full mx-5 sm:m-0 sm:w-96 max-h-64 overflow-auto">
+          <span className="text-white font-bold text-xl">New Complaints</span>
+          <ul role="list" className="divide-y divide-gray-700 text-white">
+            {unsolvedComplaints.current.length === 0
+              ? "No new complaints!"
+              : unsolvedComplaints.current.map((complaint) => (
+                  <li
+                    className="py-3 sm:py-4 px-5 rounded hover:bg-neutral-700 hover:scale-105 transition-all"
+                    key={complaint.student}
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className="flex-shrink-0 text-white">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={2}
+                          stroke="currentColor"
+                          className="w-7 h-7"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
+                          />
+                        </svg>
                       </div>
-                    </li>
-                  ))}
-            </ul>
-          </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium truncate text-white">
+                          {complaint.title}
+                        </p>
+                        <p className="text-sm truncate text-gray-400">
+                          {complaint.desc}
+                        </p>
+                      </div>
+                      <button
+                        className="hover:underline hover:text-green-600"
+                        onClick={() => dismissComplaint()}
+                      >
+                        Solved
+                      </button>
+                    </div>
+                  </li>
+                ))}
+          </ul>
         </div>
       </div>
     </div>
