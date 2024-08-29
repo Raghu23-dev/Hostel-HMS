@@ -37,6 +37,7 @@ function Navbar() {
       <button
         className="md:hidden z-20 focus:outline-none"
         onClick={() => setMenuOpen(!menuOpen)}
+        aria-label="Toggle menu"
       >
         <div className="w-6 h-6 flex flex-col justify-between items-center">
           <span
@@ -61,17 +62,19 @@ function Navbar() {
       <div
         className={`${
           menuOpen ? "flex" : "hidden"
-        } flex-col items-center justify-center absolute top-0 left-0 w-full h-screen bg-custom-dark text-white md:hidden transition-transform duration-300`}
+        } flex-col items-center justify-center fixed top-0 left-0 w-full h-full bg-custom-dark text-white md:hidden transition-transform duration-300 z-10`}
       >
         <a
           href="/auth/admin-login"
           className="py-3 px-6 text-center bg-transparent text-white rounded-md shadow-lg relative transition-all duration-300 transform hover:scale-110 hover:shadow-2xl hover:bg-white hover:text-black mb-4"
+          onClick={() => setMenuOpen(false)}
         >
           Admin Login
         </a>
         <a
           href="/auth/login"
           className="py-3 px-6 text-center bg-transparent text-white rounded-md shadow-lg relative transition-all duration-300 transform hover:scale-110 hover:shadow-2xl hover:bg-white hover:text-black"
+          onClick={() => setMenuOpen(false)}
         >
           Student Login
         </a>
