@@ -66,9 +66,10 @@ function Sidebar({ links }) {
           to={`/${filteredLinks[0]?.for}-dashboard`}
           className="py-4 px-4 md:py-5 lg:py-4 gap-2 bg-gray-800 flex items-center text-2xl hover:bg-gray-700 transition-transform duration-200 ease-in-out transform hover:scale-105"
         >
-          Dashboard
+          {/* Dashboard */}
         </Link>
         <div className="flex flex-col space-y-1 text-2xl text-white">
+          
           {filteredLinks.map((link) => (
             <Link
               to={link.url}
@@ -91,14 +92,7 @@ function Sidebar({ links }) {
           >
             Edit Profile
           </Link>
-          {/* Log Out Button */}
-          <button
-            onClick={logout}
-            type="submit"
-            className="w-full flex gap-2 justify-center text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-transform duration-200 ease-in-out transform hover:scale-105"
-          >
-            Log Out
-          </button>
+          
         </div>
       </div>
     </div>

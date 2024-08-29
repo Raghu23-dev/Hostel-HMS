@@ -19,7 +19,7 @@ function Topbar({ name }) {
   function refreshClock() {
     setDate(new Date());
   }
-  
+
   useEffect(() => {
     const timerId = setInterval(refreshClock, 1000);
     return () => {
@@ -28,11 +28,19 @@ function Topbar({ name }) {
   }, []);
 
   return (
-    <div className="py-5 px-5 flex items-center justify-between text-white w-full bg-gray-800 shadow-lg fixed top-0 left-64 w-[calc(100%-16rem)] z-50">
+    <div className="py-3 px-5 flex items-center justify-between text-white w-full bg-gray-800 shadow-lg fixed top-0 left-0 right-0 z-50">
       <div className="flex items-center gap-3">
-        {date.toLocaleTimeString()}
+        <span>{date.toLocaleTimeString()}</span>
       </div>
-      <span className="font-bold text-2xl absolute right-5 top-1/2 transform -translate-y-1/2 text-blue-500"><span className="font-thin text-lg text-white">Hello there 👋,</span> {name}</span>
+      <span className="font-bold text-2xl text-blue-500">
+        <span className="font-thin text-lg text-white">Hello there 👋,</span> {name}
+      </span>
+      <button
+        onClick={logout}
+        className="text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded transition-transform duration-200 ease-in-out transform hover:scale-105"
+      >
+        Logout
+      </button>
     </div>
   );
 }
