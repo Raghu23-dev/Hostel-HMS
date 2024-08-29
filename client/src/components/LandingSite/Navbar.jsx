@@ -10,7 +10,7 @@ function Navbar() {
       <a href="/" className="flex items-center overflow-hidden">
         <video
           src={hmsVideo}
-          className="h-16 w-40 object-cover transform scale-150" // Increased size and zoom
+          className="h-16 w-40 object-cover transform scale-150"
           autoPlay
           loop
           muted
@@ -21,13 +21,13 @@ function Navbar() {
       <div className="hidden md:flex gap-6 items-center">
         <a
           href="/auth/admin-login"
-          className="py-2 px-4 text-center bg-blue-500 hover:bg-blue-700 text-white rounded-md transition transform hover:scale-105 shadow"
+          className="py-2 px-4 text-center bg-transparent text-white rounded-md shadow-lg relative transition-all duration-300 transform hover:scale-110 hover:shadow-2xl hover:bg-white hover:text-black"
         >
           Admin Login
         </a>
         <a
           href="/auth/login"
-          className="py-2 px-4 text-center bg-blue-500 hover:bg-blue-700 text-white rounded-md transition transform hover:scale-105 shadow"
+          className="py-2 px-4 text-center bg-transparent text-white rounded-md shadow-lg relative transition-all duration-300 transform hover:scale-110 hover:shadow-2xl hover:bg-white hover:text-black"
         >
           Student Login
         </a>
@@ -65,13 +65,13 @@ function Navbar() {
       >
         <a
           href="/auth/admin-login"
-          className="py-3 px-6 text-center bg-blue-500 hover:bg-blue-700 text-white rounded-md transition duration-200 transform hover:scale-105 shadow mb-4"
+          className="py-3 px-6 text-center bg-transparent text-white rounded-md shadow-lg relative transition-all duration-300 transform hover:scale-110 hover:shadow-2xl hover:bg-white hover:text-black mb-4"
         >
           Admin Login
         </a>
         <a
           href="/auth/login"
-          className="py-3 px-6 text-center bg-blue-500 hover:bg-blue-700 text-white rounded-md transition duration-200 transform hover:scale-105 shadow"
+          className="py-3 px-6 text-center bg-transparent text-white rounded-md shadow-lg relative transition-all duration-300 transform hover:scale-110 hover:shadow-2xl hover:bg-white hover:text-black"
         >
           Student Login
         </a>

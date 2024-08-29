@@ -6,4 +6,4 @@ export default function index() {
       <HeroSection />
     </>
   );
-}
+} 
