@@ -1,6 +1,5 @@
-import { Input } from "./Input";
-import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Loader } from "../../Dashboards/Common/Loader";
@@ -104,51 +103,37 @@ export default function AdminSignIn() {
     setPass(event.target.value);
   };
 
-  const email = {
-    name: "email",
-    type: "email",
-    placeholder: "abc@email.com",
-    req: true,
-    value: inputEmail,
-    onChange: changeEmail,
-  };
-  const password = {
-    name: "password",
-    type: "password",
-    placeholder: "••••••••",
-    req: true,
-    onChange: changePass,
-    value: pass,
-  };
-
   return (
-    <div className="w-full rounded-lg md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-gray-700">
+    <div className="w-full max-w-md h-[600px] rounded-lg bg-gray-800 border-gray-700 transition-transform transform hover:scale-105 mt-20">
       <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+      <h3 className="text-l font-bold leading-tight tracking-tight md:text-lg text-blue-700">
+          Welcome back
+        </h3>
         <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl text-white">
-          Sign in to your account - Manager
+          Sign in to your account as <span className="text-green-600">Manager</span>
         </h1>
         <form className="space-y-4 md:space-y-6" onSubmit={login}>
-          <Input field={email} />
-          <Input field={password} />
-          <div className="flex items-center justify-between">
-            <div className="flex items-start">
-              <div className="flex items-center h-5">
-                <input
-                  type="checkbox"
-                  className="w-4 h-4 border rounded focus:ring-3 bg-gray-700 border-gray-600 focus:ring-blue-600 ring-offset-gray-800"
-                  required=""
-                />
-              </div>
-              <div className="ml-3 text-sm">
-                <label htmlFor="remember" className="text-gray-300">
-                  Remember me
-                </label>
-              </div>
-            </div>
-          </div>
+          <input
+            name="email"
+            type="email"
+            placeholder="Email"
+            required
+            value={inputEmail}
+            onChange={changeEmail}
+            className="w-full p-2.5 text-sm rounded-lg border-gray-600 bg-gray-700 border focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 text-white transition-transform transform hover:scale-105"
+          />
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            required
+            value={pass}
+            onChange={changePass}
+            className="w-full p-2.5 text-sm rounded-lg border-gray-600 bg-gray-700 border focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 text-white transition-transform transform hover:scale-105"
+          />
           <button
             type="submit"
-            className="w-full text-white hover:bg-blue-700 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-700 focus:ring-blue-800"
+            className="w-full text-white hover:bg-blue-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-700 focus:ring-blue-800 transition-transform transform hover:scale-105"
           >
             {loader ? (
               <>
@@ -170,7 +155,6 @@ export default function AdminSignIn() {
             pauseOnHover
             theme="dark"
           />
-         
         </form>
       </div>
     </div>
