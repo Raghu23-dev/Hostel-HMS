@@ -2,11 +2,51 @@ import { useState } from "react";
 import { Input } from "../../LandingSite/AuthPage/Input";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import emailjs from 'emailjs-com'; // Import emailjs
 
 function Suggestions() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
 
+  // Function to send email
+  const sendEmail = () => {
+    const templateParams = {
+      from_name: 'HMS SMS Team', // Replace with dynamic data if needed
+      to_name: 'Manager',
+      message: `Hello Manager,
+
+You got a new Suggestion: "${title}". Please Acknowledge.
+
+Regards,
+HMS SMS Team`,
+    };
+
+    emailjs.send('service_5q11fqs', 'template_6mbel6a', templateParams, 'dW61nSCuXlmi55Rng')
+      .then((response) => {
+        console.log('Email sent successfully:', response);
+        toast.success('Email sent successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+          theme: "dark",
+        });
+      })
+      .catch((error) => {
+        console.error('Error sending email:', error);
+        toast.error('Failed to send email.', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+          theme: "dark",
+        });
+      });
+  };
+
+  // Function to register suggestion
   const registerSuggestions = async (e) => {
     e.preventDefault();
     const student = JSON.parse(localStorage.getItem("student"));
@@ -29,6 +69,7 @@ function Suggestions() {
         draggable: true,
         theme: "dark",
       });
+      sendEmail(); // Call the sendEmail function after successful registration
     } else {
       toast.error("Suggestion registration failed", {
         position: "top-right",

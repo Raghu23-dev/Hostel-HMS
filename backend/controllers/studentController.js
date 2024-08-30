@@ -203,10 +203,10 @@ const csvStudent = async (req, res) => {
             student.hostel_name = shostel.name;
             student.d_o_b = new Date(student.dob).toDateString().slice(4);
             student.cnic_no = student.cnic.slice(0, 5) + '-' + student.cnic.slice(5, 12) + '-' + student.cnic.slice(12);
-            student.contact_no = "+92 "+student.contact.slice(1);
+            student.contact_no = "+91 "+student.contact.slice(1);
         });
 
-        const fields = ['name', 'cms_id', 'room_no', 'batch', 'dept', 'course', 'email', 'father_name', 'contact_no', 'address', 'd_o_b', 'cnic_no', 'hostel_name'];
+        const fields = ['Name', 'Student Id', 'Room No', 'Batch', 'Dept', 'Course', 'Email', 'Father Name', 'Contact No', 'Address', 'DOB', 'AADHAR Number'];
 
         const opts = { fields };
 

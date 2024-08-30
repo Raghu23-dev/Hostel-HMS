@@ -5,9 +5,10 @@ import emailjs from 'emailjs-com'; // Import EmailJS
 
 Topbar.propTypes = {
   name: PropTypes.string.isRequired,
+  showContactButton: PropTypes.bool, // New prop
 };
 
-function Topbar({ name }) {
+function Topbar({ name, showContactButton = true }) {
   const navigate = useNavigate();
   const [date, setDate] = useState(new Date());
 
@@ -55,18 +56,14 @@ function Topbar({ name }) {
         <span className="font-thin text-lg text-white">Hello there 👋,</span> {name}
       </span>
       <div className="flex items-center gap-3">
-        <button
-          onClick={sendEmail}
-          className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded transition-transform duration-200 ease-in-out transform hover:scale-105"
-        >
-          Get in touch
-        </button>
-        <button
-          onClick={logout}
-          className="text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded transition-transform duration-200 ease-in-out transform hover:scale-105"
-        >
-          Logout
-        </button>
+        {showContactButton && (
+          <button
+            onClick={sendEmail}
+            className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded transition-transform duration-200 ease-in-out transform hover:scale-105"
+          >
+            Get in touch
+          </button>
+        )}
       </div>
     </div>
   );

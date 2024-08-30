@@ -85,13 +85,12 @@ function Sidebar({ links }) {
           ))}
         </div>
         <div className="p-4">
-          {/* Edit Profile Button */}
-          <Link
-            to="/edit-profile"
-            className="w-full flex gap-2 justify-center text-white bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-transform duration-200 ease-in-out transform hover:scale-105 mb-2"
-          >
-            Edit Profile
-          </Link>
+        <button
+          onClick={logout}
+          className="w-full flex gap-2 justify-center text-white bg-red-600 hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-transform duration-200 ease-in-out transform hover:scale-105 mb-2"
+        >
+          Logout
+        </button>
           
         </div>
       </div>
