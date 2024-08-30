@@ -41,9 +41,8 @@ function Complaints() {
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
         draggable: true,
-        theme: "dark",
+        theme:"dark"
       });
       setTitle("");
       setDesc("");
@@ -114,7 +113,7 @@ function Complaints() {
   return (
     <div className="w-full h-screen flex flex-col gap-10 items-center justify-center max-h-screen overflow-y-auto">
      
-      <div className="flex gap-5 flex-wrap items-center justify-center">
+      <div className="flex gap-5 flex-wrap items-center justify-center fixed">
         <form
           method="POST"
           onSubmit={registerComplaint}
@@ -167,33 +166,21 @@ function Complaints() {
             >
               {loading ? 'Registering Complaint...' : 'Register Complaint'}
             </button>
-            <ToastContainer
-              position="top-right"
-              autoClose={3000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="dark"
-            />
           </div>
         </form>
-        <div className="w-full md:w-80 max-w-md max-h-96 p-4 border rounded-lg shadow sm:p-8 bg-gray-800 border-gray-900 drop-shadow-xl overflow-y-auto">
+        <div className="hover:scale-105  transition-all  w-full md:w-80 max-w-md max-h-96 p-4 border rounded-lg shadow sm:p-8  bg-gray-800 border-gray-900 drop-shadow-xl overflow-y-auto">
           <div className="flex items-center justify-between mb-4">
-            <h5 className="text-xl font-bold leading-none text-white">
+            <h5 className="text-xl font-bold leading-none text-white ">
               Registered Complaints
             </h5>
           </div>
-          <div className="flow-root">
-            <ul role="list" className="divide-y divide-gray-700 text-white">
+          <div className="flow-root ">
+            <ul role="list" className=" divide-y divide-gray-700 text-white">
               {regComplaints.length === 0
                 ? "No complaints registered"
                 : regComplaints.map((complain) => (
-                    <li className="py-3 sm:py-4" key={complain.title}>
-                      <div className="flex items-center space-x-4">
+                    <li className="py-3 sm:py-4 " key={complain.title}>
+                      <div className="flex items-center space-x-4 hover:scale-105  transition-all  hover:bg-gray-700 rounded-lg">
                         <div className="flex-shrink-0 text-white">
                           {complain.status.toLowerCase() === "pending" ? (
                             <svg
@@ -245,7 +232,20 @@ function Complaints() {
           </div>
         </div>
       </div>
+      <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss={true}
+              draggable={true}
+              pauseOnHover={true}
+              theme="dark"
+            />
     </div>
+    
   );
 }
 

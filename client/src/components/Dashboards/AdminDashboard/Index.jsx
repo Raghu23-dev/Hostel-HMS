@@ -48,6 +48,26 @@ export default function Index() {
       ),
     },
     {
+      text: "All Students",
+      url: "/admin-dashboard/all-students",
+      svg: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-6 h-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12 11c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM19.707 15.707A7.978 7.978 0 0012 14a7.978 7.978 0 00-7.707 1.707A1 1 0 005 18h14a1 1 0 00.707-1.293z"
+          />
+        </svg>
+      ),
+    },
+    {
       text: "Attendance",
       url: "/admin-dashboard/attendance",
       svg: (

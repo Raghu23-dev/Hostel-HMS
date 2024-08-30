@@ -81,9 +81,8 @@ function Suggestions() {
 
   return (
     <div className="w-full h-screen flex flex-col gap-3 items-center justify-center">
-      <h1 className="text-white font-bold text-5xl">Suggestions</h1>
       <div className="bg-neutral-950 px-10 py-5 rounded-xl shadow-xl sm:w-[50%] sm:min-w-[450px] w-full mt-5 max-h-96 overflow-auto">
-        <span className="text-white font-bold text-xl">All Students</span>
+        <span className="text-white font-bold text-xl ">All Students</span>
         <ul role="list" className="divide-y divide-gray-700 text-white">
           {suggestions.length === 0
             ? "No Students Suggestion Found"
