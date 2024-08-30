@@ -5,17 +5,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 function Complaints() {
   const getComplaints = async () => {
-    const hostel = JSON.parse(localStorage.getItem("hostel"))._id;
-    const response = await fetch(
-      `http://localhost:3000/api/complaint/hostel`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ hostel }),
-      }
-    );
+    const hostel = JSON.parse(localStorage.getItem("hostel"))?._id;
+    const response = await fetch(`http://localhost:3000/api/complaint/hostel`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ hostel }),
+    });
 
     const data = await response.json();
     if (data.success) {
@@ -27,10 +24,14 @@ function Complaints() {
           type: complaint.type,
           title: complaint.title,
           desc: complaint.description,
-          student: complaint.student.name,
-          room: complaint.student.room_no,
+          student: complaint.student?.name || "Unknown", // Added null check
+          room: complaint.student?.room_no || "N/A", // Added null check
           status: complaint.status,
-          date: date.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" }),
+          date: date.toLocaleDateString("en-US", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          }),
         });
       });
       setAllComplaints(complaints);
@@ -43,16 +44,12 @@ function Complaints() {
           (complaint) => complaint.status.toLowerCase() === "pending"
         )
       );
-    }
-    else
-      console.log(data);
+    } else console.log(data);
   };
 
-  //!AFTER FETCH FILL THIS WITH COMPLAINT DATA
   const [unsolvedComplaints, setComplaints] = useState([]);
-
-  const [resolvedComplaints, setResolvedComplaints] = useState([]); //!DO NOT FILL THIS WITH DATA FROM FETCH
-  const [allComplaints, setAllComplaints] = useState([]); //!AFTER FETCH FILL THIS WITH COMPLAINT DATA
+  const [resolvedComplaints, setResolvedComplaints] = useState([]);
+  const [allComplaints, setAllComplaints] = useState([]);
 
   const dismissComplaint = async (id) => {
     const response = await fetch(
@@ -68,34 +65,29 @@ function Complaints() {
 
     const data = await response.json();
     if (data.success) {
-      toast.success("Complaint Dismissed",
-        {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true
-        });
-      setComplaints(
-        allComplaints.filter((complaint) => complaint.id !== id)
-      );
+      toast.success("Complaint Dismissed", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      setComplaints(allComplaints.filter((complaint) => complaint.id !== id));
       setResolvedComplaints(
         resolvedComplaints.concat(
           allComplaints.filter((complaint) => complaint.id === id)
         )
       );
-    }
-    else{
-      toast.error("Something went wrong",
-        {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true
-          });
+    } else {
+      toast.error("Something went wrong", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
 
@@ -128,10 +120,11 @@ function Complaints() {
         "en-US",
         { day: "numeric", month: "long", year: "numeric" }
       ),
-      new Date(Date.now() - 0 * 24 * 60 * 60 * 1000).toLocaleDateString(
-        "en-US",
-        { day: "numeric", month: "long", year: "numeric" }
-      ),
+      new Date(Date.now()).toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }),
     ];
 
     const labels = dates.map((date) => date);
@@ -141,7 +134,7 @@ function Complaints() {
           allComplaints.filter((complaint) => complaint.date === date).length
       )
     );
-  }, [allComplaints.length, unsolvedComplaints.length, resolvedComplaints.length]);
+  }, [allComplaints]);
 
   const graph = (
     <div className="flex items-center justify-center md:h-64 h-40 md:w-96 w-full">
@@ -172,10 +165,11 @@ function Complaints() {
               "en-US",
               { day: "numeric", month: "long", year: "numeric" }
             ),
-            new Date(Date.now() - 0 * 24 * 60 * 60 * 1000).toLocaleDateString(
-              "en-US",
-              { day: "numeric", month: "long", year: "numeric" }
-            ),
+            new Date(Date.now()).toLocaleDateString("en-US", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            }),
           ],
           datasets: [
             {
@@ -207,59 +201,50 @@ function Complaints() {
             {unsolvedComplaints.length === 0
               ? "No new complaints!"
               : unsolvedComplaints.map((complaint) => (
-                <li
-                  className="py-3 sm:py-4 px-5 rounded hover:bg-neutral-700 hover:scale-105 transition-all"
-                  key={complaint.student}
-                >
-                  <div className="flex items-center space-x-4">
-                    <div className="flex-shrink-0 text-white">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2}
-                        stroke="currentColor"
-                        className="w-7 h-7"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
-                        />
-                      </svg>
+                  <li
+                    className="py-3 sm:py-4 px-5 rounded hover:bg-neutral-700 hover:scale-105 transition-all"
+                    key={complaint.id} // Changed key to use complaint ID
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className="flex-shrink-0 text-white">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={2}
+                          stroke="currentColor"
+                          className="w-7 h-7"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
+                          />
+                        </svg>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium truncate text-white">
+                          {complaint.title}
+                        </p>
+                        <p className="text-sm truncate text-gray-400">
+                          {complaint.desc}
+                        </p>
+                      </div>
+                      <div className="inline-flex items-center text-base font-semibold text-white">
+                        <button
+                          onClick={() => dismissComplaint(complaint.id)}
+                          className="bg-blue-600 px-5 py-1 rounded-lg hover:bg-blue-700 hover:scale-105 transition-all"
+                        >
+                          Dismiss
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium truncate text-white">
-                        {complaint.title}
-                      </p>
-                      <p className="text-sm truncate text-gray-400">
-                        {complaint.desc}
-                      </p>
-                    </div>
-                    <button
-                      className="hover:underline hover:text-green-600"
-                      onClick={() => dismissComplaint(complaint.id)}
-                    >
-                      Solved
-                    </button>
-                  </div>
-                </li>
-              ))}
+                  </li>
+                ))}
           </ul>
         </div>
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={true}
-        newestOnTop={true}
-        closeOnClick={true}
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={false}
-        pauseOnHover={false}
-        theme="dark"
-      />
+      <ToastContainer />
     </div>
   );
 }
