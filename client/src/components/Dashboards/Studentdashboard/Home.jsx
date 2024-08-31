@@ -52,7 +52,7 @@ function Home() {
     <div className="w-full h-screen flex items-center justify-center flex-col gap-5 max-h-screen overflow-y-auto pt-32 lg:pt-16 md:pt-24 sm:pt-40">
       <div className="flex gap-5 w-full justify-center flex-wrap">
         <div className="w-full max-w-sm p-3 rounded-lg shadow-lg bg-gray-800 transform transition-transform duration-300 hover:scale-110 overflow-hidden">
-          <Slider {...settings}>
+        <Slider {...settings}>
             <div className="relative ">
               <img
                 src="src/assets/notice.png"

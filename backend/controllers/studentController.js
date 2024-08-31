@@ -4,35 +4,42 @@ const { Student, Hostel, User } = require('../models');
 const bcrypt = require('bcryptjs');
 const Parser = require('json2csv').Parser;
 
+// @route   POST api/student/register
+// @desc    Register a new student
+// @access  Public
 const registerStudent = async (req, res) => {
-    // console.log(req.body);
     let success = false;
+    // Validate request data
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        // console.log(errors);
-        return res.status(400).json({success, errors: errors.array() });
+        return res.status(400).json({ success, errors: errors.array() });
     }
 
     const { name, cms_id, room_no, batch, dept, course, email, father_name, contact, address, dob, cnic, hostel, password } = req.body;
-    try {
-        let student = await Student.findOne({ cms_id });
 
+    try {
+        // Check if student with the same CMS ID already exists
+        let student = await Student.findOne({ cms_id });
         if (student) {
-            return res.status(400).json({success, errors: [{ msg: 'Student already exists' }] });
+            return res.status(400).json({ success, errors: [{ msg: 'Student already exists' }] });
         }
+
+        // Find hostel by name
         let shostel = await Hostel.findOne({ name: hostel });
 
+        // Hash the student's password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
+        // Create and save a new user
         let user = new User({
             email,
             password: hashedPassword,
             isAdmin: false
         });
-
         await user.save();
-        
+
+        // Create and save a new student
         student = new Student({
             name,
             cms_id,
@@ -49,86 +56,89 @@ const registerStudent = async (req, res) => {
             user: user.id,
             hostel: shostel.id
         });
-        
-
         await student.save();
 
         success = true;
-        res.json({success, student });
+        res.json({ success, student });
     } catch (err) {
         console.log(err);
-        res.status(500).json({success, errors: 'Server error'});
+        res.status(500).json({ success, errors: 'Server error' });
     }
 }
 
+// @route   GET api/student
+// @desc    Get student information based on token
+// @access  Public
 const getStudent = async (req, res) => {
     try {
-        // console.log(req.body);
         let success = false;
+        // Validate request data
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            // console.log(errors);
-            return res.status(400).json({success, errors: errors.array() });
+            return res.status(400).json({ success, errors: errors.array() });
         }
 
-        const { isAdmin } = req.body;
+        const { isAdmin, token } = req.body;
 
+        // Check if the user is an admin
         if (isAdmin) {
-            return res.status(400).json({success, errors:  'Admin cannot access this route' });
+            return res.status(400).json({ success, errors: 'Admin cannot access this route' });
         }
 
-        const { token } = req.body;
-        
+        // Verify the token and decode user ID
         const decoded = verifyToken(token);
 
-        const student = await Student.findOne({user: decoded.userId}).select('-password');
-        
+        // Find and return student information
+        const student = await Student.findOne({ user: decoded.userId }).select('-password');
         if (!student) {
-            return res.status(400).json({success, errors: 'Student does not exist' });
+            return res.status(400).json({ success, errors: 'Student does not exist' });
         }
 
         success = true;
-        res.json({success, student });
+        res.json({ success, student });
     } catch (err) {
         console.log(err);
-        res.status(500).json({success, errors: 'Server error'});
+        res.status(500).json({ success, errors: 'Server error' });
     }
 }
 
+// @route   GET api/students
+// @desc    Get all students by hostel ID
+// @access  Public
 const getAllStudents = async (req, res) => {
-
     let success = false;
+    // Validate request data
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        // console.log(errors);
-        return res.status(400).json({success, errors: errors.array() });
+        return res.status(400).json({ success, errors: errors.array() });
     }
 
-    let { hostel } = req.body;
+    const { hostel } = req.body;
 
     try {
-
+        // Find the hostel
         const shostel = await Hostel.findById(hostel);
-
+        // Find and return all students in the hostel
         const students = await Student.find({ hostel: shostel.id }).select('-password');
-
         success = true;
-        res.json({success, students});
-    }
-    catch (err) {
+        res.json({ success, students });
+    } catch (err) {
         console.log(err);
-        res.status(500).json({success, errors: [{msg: 'Server error'}]});
+        res.status(500).json({ success, errors: [{ msg: 'Server error' }] });
     }
 }
 
+// @route   PUT api/student/update
+// @desc    Update student information
+// @access  Private
 const updateStudent = async (req, res) => {
-
     let success = false;
     try {
+        // Find student by ID
         const student = await Student.findById(req.student.id).select('-password');
+        const { name, cms_id, room_no, batch, dept, course, email, father_name, contact, address, dob, cnic, hostel } = req.body;
 
-        const { name, cms_id, room_no, batch, dept, course, email, father_name, contact, address, dob, cnic, user, hostel } = req.body;
-
+        // Update student details
         student.name = name;
         student.cms_id = cms_id;
         student.room_no = room_no;
@@ -143,50 +153,56 @@ const updateStudent = async (req, res) => {
         student.cnic = cnic;
         student.hostel = hostel;
 
+        // Save updated student information
         await student.save();
 
         success = true;
-        res.json({success, student});
+        res.json({ success, student });
     } catch (err) {
         console.log(err);
-        res.status(500).json({success, errors: [{msg: 'Server error'}]});
+        res.status(500).json({ success, errors: [{ msg: 'Server error' }] });
     }
 }
 
+// @route   DELETE api/student/delete
+// @desc    Delete a student
+// @access  Private
 const deleteStudent = async (req, res) => {
     try {
-        // console.log(req.body);
         let success = false;
+        // Validate request data
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            // console.log(errors);
-            return res.status(400).json({success, errors: errors.array() });
+            return res.status(400).json({ success, errors: errors.array() });
         }
 
         const { id } = req.body;
 
+        // Find and delete student
         const student = await Student.findById(id).select('-password');
-
         if (!student) {
-            return res.status(400).json({success, errors: [{ msg: 'Student does not exist' }] });
+            return res.status(400).json({ success, errors: [{ msg: 'Student does not exist' }] });
         }
 
-        const user = await User.findByIdAndDelete(student.user);
-
+        // Delete associated user and student
+        await User.findByIdAndDelete(student.user);
         await Student.deleteOne(student);
 
         success = true;
-        res.json({success, msg: 'Student deleted successfully' });
+        res.json({ success, msg: 'Student deleted successfully' });
     } catch (err) {
         console.log(err);
-        res.status(500).json({success, errors: [{msg: 'Server error'}]});
+        res.status(500).json({ success, errors: [{ msg: 'Server error' }] });
     }
 }
 
+// @route   GET api/student/csv
+// @desc    Export student data to CSV
+// @access  Public
 const csvStudent = async (req, res) => {
     let success = false;
     try {
-        // Validate request
+        // Validate request data
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ success, errors: errors.array() });
@@ -203,7 +219,7 @@ const csvStudent = async (req, res) => {
         // Find students in the hostel
         const students = await Student.find({ hostel: shostel.id }).select('-password');
 
-        // Transform student data
+        // Transform student data for CSV
         const transformedStudents = students.map(student => {
             return {
                 Name: student.name,
@@ -236,7 +252,6 @@ const csvStudent = async (req, res) => {
         res.status(500).json({ success, errors: [{ msg: 'Server error' }] });
     }
 }
-
 
 module.exports = {
     registerStudent,

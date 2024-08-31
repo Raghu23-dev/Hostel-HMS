@@ -1,70 +1,72 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose');  // Importing mongoose for MongoDB object modeling
+const Schema = mongoose.Schema;         // Destructuring Schema from mongoose
 
+// Defining the Student schema
 const StudentSchema = new Schema({
-    name:{
-        type:String,
-        required:true
+    name: {
+        type: String,                   // Type of the field is String
+        required: true                 // This field is required
     },
-    cms_id:{
-        type:Number,
-        required:true,
-        unique:true
+    cms_id: {
+        type: Number,                  // Type of the field is Number
+        required: true,                // This field is required
+        unique: true                   // This field must be unique
     },
-    room_no:{
-        type:Number,
-        required:true
+    room_no: {
+        type: Number,                  // Type of the field is Number
+        required: true                 // This field is required
     },
-    batch:{
-        type:Number,
-        required:true
+    batch: {
+        type: Number,                  // Type of the field is Number
+        required: true                 // This field is required
     },
-    dept:{
-        type:String,
-        required:true
+    dept: {
+        type: String,                  // Type of the field is String
+        required: true                 // This field is required
     },
-    course:{
-        type:String,
-        required:true
+    course: {
+        type: String,                  // Type of the field is String
+        required: true                 // This field is required
     },
-    email:{
-        type:String,
-        required:true,
-        unique:true
+    email: {
+        type: String,                  // Type of the field is String
+        required: true,                // This field is required
+        unique: true                   // This field must be unique
     },
-    father_name:{
-        type:String,
-        required:true
+    father_name: {
+        type: String,                  // Type of the field is String
+        required: true                 // This field is required
     },
-    contact:{
-        type:String,
-        required:true
+    contact: {
+        type: String,                  // Type of the field is String
+        required: true                 // This field is required
     },
-    address:{
-        type:String,
-        required:true
+    address: {
+        type: String,                  // Type of the field is String
+        required: true                 // This field is required
     },
-    dob:{
-        type:Date,
-        required:true
+    dob: {
+        type: Date,                    // Type of the field is Date
+        required: true                 // This field is required
     },
-    cnic:{
-        type:String,
-        required:true,
-        unique:true
+    cnic: {
+        type: String,                  // Type of the field is String
+        required: true,                // This field is required
+        unique: true                   // This field must be unique
     },
-    user:{
-        type:Schema.Types.ObjectId,
-        ref:'user'
+    user: {
+        type: Schema.Types.ObjectId,   // Type of the field is ObjectId, referencing the 'user' model
+        ref: 'user'                    // Reference to the 'user' collection
     },
-    hostel:{
-        type:Schema.Types.ObjectId,
-        ref:'hostel'
+    hostel: {
+        type: Schema.Types.ObjectId,   // Type of the field is ObjectId, referencing the 'hostel' model
+        ref: 'hostel'                  // Reference to the 'hostel' collection
     },
-    date:{
-        type:Date,
-        default:Date.now
+    date: {
+        type: Date,                    // Type of the field is Date
+        default: Date.now              // Default value is the current date and time
     }
-})
+});
 
-module.exports = Student = mongoose.model('student',StudentSchema);
+// Exporting the Student model
+module.exports = Student = mongoose.model('student', StudentSchema);

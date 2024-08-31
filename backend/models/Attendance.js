@@ -1,19 +1,24 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// Define the schema for the Attendance model
 const AttendanceSchema = new Schema({
-    student:{
-        type:Schema.Types.ObjectId,
-        ref:'student'
+    // Reference to the Student model (ObjectId type)
+    student: {
+        type: Schema.Types.ObjectId,
+        ref: 'student' // Refers to the 'student' model
     },
-    date:{
-        type:Date,
-        default:Date.now
+    // Date of the attendance record
+    date: {
+        type: Date,
+        default: Date.now // Default value is the current date and time
     },
-    status:{
-        type:String,
-        required:true
+    // Status of the attendance (e.g., "present", "absent")
+    status: {
+        type: String,
+        required: true // This field is required
     }
-})
+});
 
-module.exports = Attendance = mongoose.model('attendance',AttendanceSchema);
+// Create the Attendance model from the schema and export it
+module.exports = Attendance = mongoose.model('attendance', AttendanceSchema);
