@@ -1,12 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "./Modal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../../Dashboards/Common/Loader";
 
 function Suggestions() {
+  // Function to fetch suggestions from the server
   const getSuggestions = async () => {
+    // Retrieve hostel info from local storage
     const hostel = JSON.parse(localStorage.getItem("hostel"));
+    
+    // Send a POST request to fetch suggestions for the hostel
     const response = await fetch("http://localhost:3000/api/suggestion/hostel", {
       method: "POST",
       headers: {
@@ -15,12 +19,15 @@ function Suggestions() {
       body: JSON.stringify({ hostel: hostel._id }),
     });
 
+    // Parse the response
     const data = await response.json();
     console.log(data);
-    if (data.success) {
-      setSuggestions(data.suggestions.filter((suggestion) => suggestion.status === "pending"));
 
+    if (data.success) {
+      // Filter and set suggestions with 'pending' status
+      setSuggestions(data.suggestions.filter((suggestion) => suggestion.status === "pending"));
     } else {
+      // Show error toast if fetching suggestions fails
       toast.error("Something failed", {
         position: "top-right",
         autoClose: 3000,
@@ -31,20 +38,26 @@ function Suggestions() {
     }
   };
 
+  // Function to update the status of a suggestion
   const updateSuggestion = async (id) => {
-    setLoader(true);
+    setLoader(true); // Show loader while processing
     console.log(id);
+    
+    // Send a POST request to update the suggestion status
     const response = await fetch("http://localhost:3000/api/suggestion/update", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({id,  status: "approved"}),
+      body: JSON.stringify({ id, status: "approved" }),
     });
 
+    // Parse the response
     const data = await response.json();
     console.log(data);
+
     if (data.success) {
+      // Show success toast and refresh suggestions
       toast.success("Suggestion Approved", {
         position: "top-right",
         autoClose: 3000,
@@ -52,8 +65,9 @@ function Suggestions() {
         closeOnClick: true,
         draggable: true,
       });
-      getSuggestions();
+      getSuggestions(); // Refresh suggestions
     } else {
+      // Show error toast if updating suggestion fails
       toast.error("Something failed", {
         position: "top-right",
         autoClose: 3000,
@@ -62,40 +76,48 @@ function Suggestions() {
         draggable: true,
       });
     }
-    setLoader(false);
+    setLoader(false); // Hide loader
   };
 
-  const [loader, setLoader] = useState(false)
-  const [suggestions, setSuggestions] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [modalData, setModalData] = useState(false);
+  // State variables
+  const [loader, setLoader] = useState(false); // Manage loading state
+  const [suggestions, setSuggestions] = useState([]); // Store fetched suggestions
+  const [showModal, setShowModal] = useState(false); // Manage modal visibility
+  const [modalData, setModalData] = useState(null); // Store data for the modal
 
+  // Toggle the visibility of the modal
   const toggleModal = (suggestion = {}) => {
     setModalData(suggestion);
     setShowModal((showModal) => !showModal);
   };
 
+  // Fetch suggestions when the component mounts
   useEffect(() => {
     getSuggestions();
   }, []);
 
   return (
     <div className="w-full h-screen flex flex-col gap-3 items-center justify-center">
+      {/* Suggestions container */}
       <div className="bg-gray-800 px-10 py-5 rounded-xl shadow-xl sm:w-[50%] sm:min-w-[450px] w-full mt-5 max-h-96 overflow-auto transition-transform transform hover:scale-110">
-        <span className="text-white font-bold text-xl flex justify-center mb-3">Suggestions from all Students</span>
+        <span className="text-white font-bold text-xl flex justify-center mb-3">
+          Suggestions from all Students
+        </span>
         <ul role="list" className="divide-y divide-gray-700 text-white">
           {suggestions.length === 0
-            ? "No Students Suggestion Found"  
+            ? "No Students Suggestion Found"  // Display message if no suggestions
             : suggestions.map((suggestion) => (
               <>
+                {/* Render modal if it is visible */}
                 {showModal && (
                   <Modal closeModal={toggleModal} suggestion={modalData} />
                 )}
                 <li
-                  className="py-3 px-5 rounded sm:py-4 hover:bg-gray-700 hover:shadow-xl hover:scale-110  transition-all cursor-pointer rounded-lg"
+                  className="py-3 px-5 rounded sm:py-4 hover:bg-gray-700 hover:shadow-xl hover:scale-110 transition-all cursor-pointer rounded-lg"
                   key={suggestion._id}
                 >
                   <div className="flex items-center space-x-4">
+                    {/* Icon for the suggestion */}
                     <div className="flex-shrink-0 text-white">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -120,12 +142,13 @@ function Suggestions() {
                         {suggestion.description}
                       </p>
                     </div>
+                    {/* Button to update suggestion status */}
                     <button className="group/show relative z-0"
                       onClick={() => updateSuggestion(suggestion._id)}
                     >
                       {
                         loader ? 
-                          <Loader />:
+                          <Loader />: // Show loader if processing
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -151,6 +174,20 @@ function Suggestions() {
             ))}
         </ul>
       </div>
+
+      {/* ToastContainer to display notifications */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
   );
 }

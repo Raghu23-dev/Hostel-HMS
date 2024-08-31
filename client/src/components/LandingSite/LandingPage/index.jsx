@@ -1,9 +1,9 @@
-import { HeroSection } from "./HeroSection";
+import { HeroSection } from "./HeroSection"; // Import the HeroSection component
 
 export default function index() {
   return (
     <>
-      <HeroSection />
+      <HeroSection /> {/* Render the HeroSection component */}
     </>
   );
-} 
+}

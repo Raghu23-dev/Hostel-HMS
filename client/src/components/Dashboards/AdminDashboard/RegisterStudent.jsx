@@ -5,11 +5,15 @@ import { Loader } from "../Common/Loader";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+// RegisterStudent component
 function RegisterStudent() {
+  // Function to handle student registration form submission
   const registerStudent = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default form submission behavior
     try {
-      setLoading(true);
+      setLoading(true); // Set loading state to true while processing
+
+      // Create a student object from form fields
       let student = {
         name: name,
         cms_id: cms,
@@ -26,16 +30,21 @@ function RegisterStudent() {
         hostel: hostel,
         password: password
       };
+
+      // Send a POST request to register the student
       const res = await fetch("http://localhost:3000/api/student/register-student", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(student),
-      })
+      });
+
+      // Parse the response from the server
       const data = await res.json();
 
       if (data.success) {
+        // Show a success toast if registration is successful
         toast.success(
           'Student ' + data.student.name + ' Registered Successfully!', {
           position: "top-right",
@@ -46,7 +55,9 @@ function RegisterStudent() {
           draggable: true,
           progress: undefined,
           theme: "dark",
-        })
+        });
+
+        // Clear form fields after successful registration
         setCms("");
         setName("");
         setRoomNo("");
@@ -60,9 +71,9 @@ function RegisterStudent() {
         setDob("");
         setCnic("");
         setPassword("");
-        setLoading(false);
+        setLoading(false); // Set loading state to false
       } else {
-        // console.log(cms);
+        // Show error toast for each validation error
         data.errors.forEach((err) => {
           toast.error(
             err.msg, {
@@ -71,28 +82,28 @@ function RegisterStudent() {
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
-          })
-        })
-        setLoading(false);
-
+          });
+        });
+        setLoading(false); // Set loading state to false
       }
     } catch (err) {
-      console.log(err);
+      console.log(err); // Log the error to the console
       toast.error(
-        err, {
+        err.toString(), {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
-      }
-      )
-      setLoading(false);
+      });
+      setLoading(false); // Set loading state to false
     }
   };
 
+  // Retrieve hostel name from local storage
   const hostel = JSON.parse(localStorage.getItem("hostel")).name;
 
+  // Define state variables for form fields
   const [cms, setCms] = useState();
   const [name, setName] = useState();
   const [room_no, setRoomNo] = useState();
@@ -106,14 +117,15 @@ function RegisterStudent() {
   const [dob, setDob] = useState();
   const [cnic, setCnic] = useState();
   const [password, setPassword] = useState();
-
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // State to manage loading status
 
   return (
     <div className="w-full max-h-screen pt-20 flex flex-col items-center justify-center">
-      <div className="md:w-[70vw]  w-full  p-10 bg-gray-800 rounded-lg shadow-xl mb-10 overflow-auto ">
+      <div className="md:w-[70vw] w-full p-10 bg-gray-800 rounded-lg shadow-xl mb-10 overflow-auto">
+        {/* Registration form */}
         <form method="post" onSubmit={registerStudent} className="flex flex-col gap-6">
-          <div className="grid md:grid-cols-2 grid-cols-1 gap-5 w-full ">
+          <div className="grid md:grid-cols-2 grid-cols-1 gap-5 w-full">
+            {/* Input fields for student details */}
             <Input
               field={{
                 name: "Name",
@@ -127,7 +139,7 @@ function RegisterStudent() {
             <Input
               field={{
                 name: "UID",
-                placeholder: "Student 6 digit UID ",
+                placeholder: "Student 6 digit UID",
                 type: "number",
                 req: true,
                 value: cms,
@@ -248,11 +260,11 @@ function RegisterStudent() {
             </label>
             <textarea
               name="address"
-              placeholder="Student's Permenant Resident Address"
+              placeholder="Student's Permanent Resident Address"
               required
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              className="border flex-grow sm:text-sm rounded-lg block w-full p-2.5 bg-neutral-700 border-neutral-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 outline-none my-2 resize-none transition-transform transform hover:scale-110 "
+              className="border flex-grow sm:text-sm rounded-lg block w-full p-2.5 bg-neutral-700 border-neutral-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 outline-none my-2 resize-none transition-transform transform hover:scale-110"
             />
             <Input
               field={{
@@ -276,22 +288,22 @@ function RegisterStudent() {
                 <span>Register Student</span>
               )}
             </Button>
-            
           </div>
         </form>
       </div>
+      {/* ToastContainer for displaying notifications */}
       <ToastContainer
-              position="top-right"
-              autoClose={3000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="dark"
-            />
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
   );
 }

@@ -1,15 +1,19 @@
-import { Outlet } from "react-router-dom";
-import { Sidebar } from "../Common/Sidebar";
-import { Topbar } from "../Common/Topbar";
+import { Outlet } from "react-router-dom"; // Import Outlet for nested routing
+import { Sidebar } from "../Common/Sidebar"; // Import Sidebar component
+import { Topbar } from "../Common/Topbar"; // Import Topbar component
 
 export default function Index() {
+  // Define the dashboard type
   const dashboard = "student";
+  
+  // Links to be displayed in the sidebar
   const links = [
     {
       text: "Home",
       url: "/student-dashboard",
       for: dashboard,
       svg: (
+        // SVG icon for Home link
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -30,6 +34,7 @@ export default function Index() {
       text: "Attendance",
       url: "/student-dashboard/attendance",
       svg: (
+        // SVG icon for Attendance link
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -50,6 +55,7 @@ export default function Index() {
       text: "Complaints",
       url: "/student-dashboard/complaints",
       svg: (
+        // SVG icon for Complaints link
         <svg
           className="h-6 w-6"
           viewBox="0 0 24 24"
@@ -60,10 +66,9 @@ export default function Index() {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          {" "}
-          <circle cx="12" cy="12" r="10" />{" "}
-          <path d="M16 16s-1.5-2-4-2-4 2-4 2" />{" "}
-          <line x1="9" y1="9" x2="9.01" y2="9" />{" "}
+          <circle cx="12" cy="12" r="10" />
+          <path d="M16 16s-1.5-2-4-2-4 2-4 2" />
+          <line x1="9" y1="9" x2="9.01" y2="9" />
           <line x1="15" y1="9" x2="15.01" y2="9" />
         </svg>
       ),
@@ -72,6 +77,7 @@ export default function Index() {
       text: "Suggestions",
       url: "/student-dashboard/suggestions",
       svg: (
+        // SVG icon for Suggestions link
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -90,14 +96,18 @@ export default function Index() {
     },
   ];
 
+  // Retrieve the student object from localStorage
   const student = JSON.parse(localStorage.getItem("student"));
 
   return (
     <div className="flex">
+      {/* Sidebar with the navigation links */}
       <Sidebar links={links} />
-      <Topbar name={student.name} notifications={[]}/>
+      {/* Topbar with the student's name and empty notifications array */}
+      <Topbar name={student.name} notifications={[]} />
+      {/* Main content area where nested routes will render */}
       <div className="w-full bg-stone-900 h-screen">
-        <Outlet />
+        <Outlet /> {/* Renders the matched child route */}
       </div>
     </div>
   );

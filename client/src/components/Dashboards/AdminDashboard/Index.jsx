@@ -4,7 +4,10 @@ import { Topbar } from "../Common/Topbar";
 import { useEffect, useState } from "react";
 
 export default function Index() {
+  // Define the user role for the dashboard
   const dashboard = "student";
+
+  // Define the navigation links for the sidebar
   const links = [
     {
       text: "Home",
@@ -87,8 +90,6 @@ export default function Index() {
         </svg>
       ),
     },
-   
-    
     {
       text: "Complaints",
       url: "/admin-dashboard/complaints",
@@ -102,10 +103,12 @@ export default function Index() {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          {" "}
-          <path stroke="none" d="M0 0h24v24H0z" />{" "}
-          <path d="M4 4h16v16H4z" /> <path d="M4 6h16" /> <path d="M4 10h16" />{" "}
-          <path d="M4 14h16" /> <path d="M4 18h16" />
+          <path stroke="none" d="M0 0h24v24H0z" />
+          <path d="M4 4h16v16H4z" />
+          <path d="M4 6h16" />
+          <path d="M4 10h16" />
+          <path d="M4 14h16" />
+          <path d="M4 18h16" />
         </svg>
       ),
     },
@@ -122,35 +125,49 @@ export default function Index() {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          {" "}
-          <path stroke="none" d="M0 0h24v24H0z" />{" "}
-          <path d="M4 4h16v16H4z" /> <path d="M4 6h16" /> <path d="M4 10h16" />{" "}
-          <path d="M4 14h16" /> <path d="M4 18h16" />
+          <path stroke="none" d="M0 0h24v24H0z" />
+          <path d="M4 4h16v16H4z" />
+          <path d="M4 6h16" />
+          <path d="M4 10h16" />
+          <path d="M4 14h16" />
+          <path d="M4 18h16" />
         </svg>
       ),
     },
-    
   ];
 
+  // Retrieve admin information from local storage
   const admin = JSON.parse(localStorage.getItem("admin"));
 
+  // State variable for notifications
   const [notifications, setNotifications] = useState([
     368115, 347403, 377902, 369420,
   ]);
 
   useEffect(() => {
+    // Fetch notifications from the database (mocked here)
     //! FETCH FROM DATABASE DANISH
     setNotifications([368115, 347403, 377902, 369420]);
   }, []);
 
-  // Determine if the current route is the admin dashboard
+  // Check if the current route is within the admin dashboard
   const isAdminDashboard = window.location.pathname.startsWith('/admin-dashboard');
 
   return (
     <div className="flex">
+      {/* Render the Sidebar component with navigation links */}
       <Sidebar links={links} />
-      <Topbar name={admin.name} notifications={notifications} showContactButton={!isAdminDashboard} />
+      
+      {/* Render the Topbar component with admin name and notifications */}
+      <Topbar 
+        name={admin.name} 
+        notifications={notifications} 
+        showContactButton={!isAdminDashboard} 
+      />
+      
+      {/* Render the main content area */}
       <div className="w-full bg-stone-900 h-screen">
+        {/* Outlet component for rendering nested routes */}
         <Outlet />
       </div>
     </div>

@@ -1,53 +1,60 @@
 import { useEffect, useState } from "react";
-import { Input } from "../../LandingSite/AuthPage/Input";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Input } from "../../LandingSite/AuthPage/Input"; // Custom Input component
+import { ToastContainer, toast } from 'react-toastify'; // Toast notifications
+import 'react-toastify/dist/ReactToastify.css'; // Toast styles
 
+// Complaints component for registering and viewing complaints
 function Complaints() {
-  const [loading, setLoading] = useState(false);
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
-  const [type, setType] = useState("Electric");
-  const [regComplaints, setRegComplaints] = useState([]);
+  // State variables for managing form input and registered complaints
+  const [loading, setLoading] = useState(false); // Loading state for complaint registration
+  const [title, setTitle] = useState(""); // Complaint title
+  const [desc, setDesc] = useState(""); // Complaint description
+  const [type, setType] = useState("Electric"); // Complaint type
+  const [regComplaints, setRegComplaints] = useState([]); // List of registered complaints
 
+  // Available types of complaints
   const types = ["Electric", "Furniture", "Cleaning", "Others"];
 
+  // Function to handle complaint registration
   const registerComplaint = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    let student = JSON.parse(localStorage.getItem("student"));
+    e.preventDefault(); // Prevent default form submission
+    setLoading(true); // Set loading state to true
+    let student = JSON.parse(localStorage.getItem("student")); // Get student info from localStorage
     const complaint = {
-      student: student._id,
-      hostel: student.hostel,
-      title: title,
-      description: desc,
-      type: type,
+      student: student._id, // Student ID
+      hostel: student.hostel, // Hostel info
+      title: title, // Complaint title
+      description: desc, // Complaint description
+      type: type, // Complaint type
     };
 
+    // Send the complaint to the server
     const res = await fetch("http://localhost:3000/api/complaint/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(complaint),
+      body: JSON.stringify(complaint), // Send the complaint data as JSON
     });
 
-    const data = await res.json();
+    const data = await res.json(); // Get response data
 
     if (data.success) {
-      setRegComplaints([]);
-      toast.success("Complaint Registered Successfully!", {
+      // If registration is successful
+      setRegComplaints([]); // Reset the list of registered complaints
+      toast.success("Complaint Registered Successfully!", { // Show success toast notification
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         draggable: true,
-        theme:"dark"
+        theme: "dark",
       });
-      setTitle("");
-      setDesc("");
-      setType("Electric");
+      setTitle(""); // Reset title input
+      setDesc(""); // Reset description input
+      setType("Electric"); // Reset type input
     } else {
+      // If registration fails, show error toast notification
       toast.error(data.errors, {
         position: "top-right",
         autoClose: 3000,
@@ -58,41 +65,45 @@ function Complaints() {
         theme: "dark",
       });
     }
-    setLoading(false);
+    setLoading(false); // Set loading state to false
   };
 
+  // Fetch registered complaints when the component mounts or when the number of registered complaints changes
   useEffect(() => {
-    const student = JSON.parse(localStorage.getItem("student"));
-    const cmpln = { student: student._id };
+    const student = JSON.parse(localStorage.getItem("student")); // Get student info from localStorage
+    const cmpln = { student: student._id }; // Prepare payload for the fetch request
     const fetchComplaints = async () => {
       const res = await fetch("http://localhost:3000/api/complaint/student", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(cmpln),
+        body: JSON.stringify(cmpln), // Send the student ID as JSON
       });
-      const data = await res.json();
+      const data = await res.json(); // Get response data
       let complaints = data.complaints;
       complaints = complaints.map((complaint) => {
+        // Format date of each complaint
         var date = new Date(complaint.date);
         complaint.date = date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
         return {
-          title: complaint.title,
-          status: complaint.status,
-          date: complaint.date,
-          type: complaint.type,
+          title: complaint.title, // Complaint title
+          status: complaint.status, // Complaint status
+          date: complaint.date, // Formatted date
+          type: complaint.type, // Complaint type
         };
       });
-      setRegComplaints(data.complaints);
-    }
-    fetchComplaints();
-  }, [regComplaints.length]);
+      setRegComplaints(data.complaints); // Update registered complaints state
+    };
+    fetchComplaints(); // Fetch complaints from the server
+  }, [regComplaints.length]); // Dependencies array, triggers useEffect when regComplaints length changes
 
-  const chngType = (e) => setType(e.target.value);
-  const titleChange = (e) => setTitle(e.target.value);
-  const descChange = (e) => setDesc(e.target.value);
+  // Handlers for form inputs
+  const chngType = (e) => setType(e.target.value); // Update type state
+  const titleChange = (e) => setTitle(e.target.value); // Update title state
+  const descChange = (e) => setDesc(e.target.value); // Update description state
 
+  // Configuration objects for the Input components
   const complaintTitle = {
     name: "complaint title",
     placeholder: "Title",
@@ -112,13 +123,14 @@ function Complaints() {
 
   return (
     <div className="w-full h-screen flex flex-col gap-10 items-center justify-center max-h-screen overflow-y-auto">
-     
+      {/* Complaint registration form */}
       <div className="flex gap-5 flex-wrap items-center justify-center fixed">
         <form
           method="POST"
-          onSubmit={registerComplaint}
+          onSubmit={registerComplaint} // Handle form submission
           className="md:w-[30vw] w-full py-5 pb-7 px-10 bg-gray-800 rounded-lg shadow-lg flex flex-col gap-5 transition-transform transform hover:scale-110"
         >
+          {/* Complaint type selection */}
           <div>
             <label
               htmlFor="description"
@@ -131,19 +143,21 @@ function Complaints() {
               onChange={chngType}
             >
               {types.map((type) => (
-                <option key={type}>{type}</option>
+                <option key={type}>{type}</option> // List all complaint types in dropdown
               ))}
             </select>
+            {/* Conditional rendering for custom complaint type input */}
             {type.toLowerCase() === "electric" ||
             type.toLowerCase() === "furniture" ||
             type.toLowerCase() === "cleaning" ? (
               <></>
             ) : (
               <div className="mt-5">
-                <Input field={complaintType} />
+                <Input field={complaintType} /> {/* Custom Input component for other types */}
               </div>
             )}
           </div>
+          {/* Complaint title input */}
           <Input field={complaintTitle} />
           <div>
             <label
@@ -152,6 +166,7 @@ function Complaints() {
             >
               Your Complaint Description
             </label>
+            {/* Complaint description textarea */}
             <textarea
               name="description"
               placeholder="Please describe your Complaints, We'll resolve it ASAP"
@@ -159,23 +174,25 @@ function Complaints() {
               onChange={descChange}
               value={desc}
             ></textarea>
+            {/* Submit button */}
             <button
               type="submit"
               className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-800 text-lg rounded-lg px-5 py-2.5 mt-5 text-center transition-transform transform hover:scale-110"
-              disabled={loading}
+              disabled={loading} // Disable button if loading
             >
-              {loading ? 'Registering Complaint...' : 'Register Complaint'}
+              {loading ? 'Registering Complaint...' : 'Register Complaint'} {/* Button text based on loading state */}
             </button>
           </div>
         </form>
-        <div className="hover:scale-110  transition-all  w-full md:w-80 max-w-md max-h-96 p-4 border rounded-lg shadow sm:p-8  bg-gray-800 border-gray-900 drop-shadow-xl overflow-y-auto">
+        {/* Display registered complaints */}
+        <div className="hover:scale-110 transition-all w-full md:w-80 max-w-md max-h-96 p-4 border rounded-lg shadow sm:p-8 bg-gray-800 border-gray-900 drop-shadow-xl overflow-y-auto">
           <div className="flex items-center justify-between mb-4">
-            <h5 className="text-xl font-bold leading-none text-white ">
+            <h5 className="text-xl font-bold leading-none text-white">
               Registered Complaints
             </h5>
           </div>
-          <div className="flow-root ">
-            <ul role="list" className=" divide-y divide-gray-700 text-white">
+          <div className="flow-root">
+          <ul role="list" className=" divide-y divide-gray-700 text-white">
               {regComplaints.length === 0
                 ? "No complaints registered"
                 : regComplaints.map((complain) => (
@@ -232,20 +249,8 @@ function Complaints() {
           </div>
         </div>
       </div>
-      <ToastContainer
-              position="top-right"
-              autoClose={3000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss={true}
-              draggable={true}
-              pauseOnHover={true}
-              theme="dark"
-            />
+      <ToastContainer /> {/* Container for toast notifications */}
     </div>
-    
   );
 }
 

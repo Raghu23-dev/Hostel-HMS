@@ -1,54 +1,59 @@
+/* Import Tailwind CSS base styles, components, and utilities */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Import Slick Carousel CSS */
 @import "~slick-carousel/slick/slick.css";
 @import "~slick-carousel/slick/slick-theme.css";
 
-
+/* Define CSS custom properties (variables) */
 :root {
-  --clr-primary: #111827;
-  --primary: #1C1917;
-  --secondary: #0A0A0A;
+  --clr-primary: #111827; /* Primary color for the background */
+  --primary: #1C1917;     /* Primary color for scrollbar and other elements */
+  --secondary: #0A0A0A;   /* Secondary color for scrollbar thumb */
 }
 
+/* Apply background color to the body using the primary color */
 body {
   background-color: var(--clr-primary);
 }
 
-/* Firefox */
+/* Style scrollbars for Firefox */
 * {
-  scrollbar-width: thin;
-  scrollbar-color: var(--secondary) var(--primary);
+  scrollbar-width: thin; /* Make the scrollbar thin */
+  scrollbar-color: var(--secondary) var(--primary); /* Color of the scrollbar thumb and track */
 }
 
-/* Chrome, Edge, and Safari */
+/* Style scrollbars for Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
-  width: 5px;
+  width: 5px; /* Set the width of the scrollbar */
 }
 
 *::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 5px;
+  background: transparent; /* Make the scrollbar track transparent */
+  border-radius: 5px;      /* Round the corners of the scrollbar track */
 }
 
 *::-webkit-scrollbar-thumb {
-  /* background-color: var(--primary); */
-  /* border-radius: 14px; */
-  border-left: 5px solid var(--primary);
+  /* Border color of the scrollbar thumb */
+  border-left: 5px solid var(--primary); /* Add a solid border on the left side of the scrollbar thumb */
 }
 
+/* Style input fields that use the autofill feature */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-text-fill-color: #fff;
-    transition: background-color 5000000s ease-in-out 0s;
+  -webkit-text-fill-color: #fff; /* Change text color to white when autofilled */
+  transition: background-color 5000000s ease-in-out 0s; /* Prevent background color from changing */
 }
 
+/* Remove spin buttons from number inputs */
 @layer base {
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+    -webkit-appearance: none; /* Remove the default appearance of spin buttons */
+    margin: 0;                /* Remove default margin */
   }
 }
