@@ -17,11 +17,10 @@ function AllStudents() {
       body: JSON.stringify({ hostel }),
     });
     const data = await res.json();
-    console.log(data.csv); // Log CSV data to check its content
-  
+    console.log(data);
     if (data.success) {
       const link = document.createElement('a');
-      link.href = "data:text/csv;charset=utf-8," + encodeURIComponent(data.csv);
+      link.href = "data:text/csv;charset=utf-8," + escape(data.csv);
       link.download = 'students.csv';
       link.click();
       toast.success(
@@ -40,10 +39,9 @@ function AllStudents() {
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
-      });
+      })
     }
   };
-  
 
   const getAll = async () => {
     const data = await getAllStudents();
