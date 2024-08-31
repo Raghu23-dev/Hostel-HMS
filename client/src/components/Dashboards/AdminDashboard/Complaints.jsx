@@ -72,6 +72,7 @@ function Complaints() {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
+        theme:"dark"
       });
       setComplaints(allComplaints.filter((complaint) => complaint.id !== id));
       setResolvedComplaints(
@@ -137,7 +138,7 @@ function Complaints() {
   }, [allComplaints]);
 
   const graph = (
-    <div className="flex items-center justify-center md:h-64 h-40 md:w-96 w-full">
+    <div className="flex items-center justify-center md:h-64 h-40 md:w-96 w-full transition-transform transform hover:scale-110">
       <Line
         data={{
           labels: [
@@ -192,17 +193,16 @@ function Complaints() {
 
   return (
     <div className="w-full h-screen flex flex-col gap-10 md:gap-7 pt-32 items-center justify-center overflow-auto">
-      <h1 className="text-white font-bold text-5xl">Complaints</h1>
-      <div className="flex md:gap-7 flex-wrap justify-center items-center gap-7">
+      <div className="flex md:gap-7 flex-wrap justify-center items-center gap-7 ">
         {graph}
-        <div className="bg-neutral-950 px-10 py-5 rounded-xl shadow-xl w-96 max-h-64 overflow-auto">
-          <span className="text-white font-bold text-xl">New Complaints</span>
+        <div className="bg-gray-800 px-10 py-5 rounded-xl shadow-xl w-96 max-h-64 overflow-auto  transition-transform transform hover:scale-110">
+          <span className="text-white font-bold text-xl flex justify-center">New Complaints</span>
           <ul role="list" className="divide-y divide-gray-700 text-white">
             {unsolvedComplaints.length === 0
               ? "No new complaints!"
               : unsolvedComplaints.map((complaint) => (
                   <li
-                    className="py-3 sm:py-4 px-5 rounded hover:bg-neutral-700 hover:scale-105 transition-all"
+                    className="py-3 sm:py-4 px-5 rounded hover:bg-neutral-700 hover:scale-110 transition-all"
                     key={complaint.id} // Changed key to use complaint ID
                   >
                     <div className="flex items-center space-x-4">
@@ -233,7 +233,7 @@ function Complaints() {
                       <div className="inline-flex items-center text-base font-semibold text-white">
                         <button
                           onClick={() => dismissComplaint(complaint.id)}
-                          className="bg-blue-600 px-5 py-1 rounded-lg hover:bg-blue-700 hover:scale-105 transition-all"
+                          className="bg-blue-600 px-5 py-1 rounded-lg hover:bg-blue-700 hover:scale-110 transition-all"
                         >
                           Dismiss
                         </button>

@@ -154,15 +154,14 @@ function Attendance() {
   return (
     <div className="w-full h-screen flex flex-col gap-3 items-center xl:pt-0 md:pt-40 pt-64 justify-center overflow-auto max-h-screen">
       <LoadingBar color="#0000FF" progress={progress} onLoaderFinished={() => setProgress(0)} />
-      <h1 className="text-white font-bold text-5xl">Attendance</h1>
       <p className="text-white text-xl mb-10">Date: {date}</p>
       <div className="flex gap-5 flex-wrap items-center justify-center">
         <>{graph}</>
-        <div className="flow-root md:w-[400px] w-full bg-neutral-950 px-7 py-5 rounded-lg shadow-xl max-h-[250px] overflow-auto">
+        <div className="flow-root md:w-[400px] w-full bg-gray-800 px-7 py-5 rounded-lg shadow-xl max-h-[250px] overflow-auto transition-transform transform hover:scale-110">
           <span
             className={`font-bold text-xl text-white ${
               unmarkedStudents.length ? "block" : "hidden"
-            }`}
+            } flex justify-center`}
           >
             Unmarked Students
           </span>
@@ -172,7 +171,7 @@ function Attendance() {
               : unmarkedStudents.map((student) =>
                   student.attendance === undefined ? (
                     <li
-                      className="py-3 sm:py-4 px-5 rounded hover:bg-neutral-700 hover:scale-105 transition-all"
+                      className="py-3 sm:py-4 px-5 rounded hover:bg-gray-700 hover:scale-110 transition-all"
                       key={student.id}
                     >
                       <div className="flex items-center space-x-4">

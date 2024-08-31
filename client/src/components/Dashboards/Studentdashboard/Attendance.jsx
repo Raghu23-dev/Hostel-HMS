@@ -59,7 +59,7 @@ function Home() {
         <li>Absent Days: {daysOff}</li>
       </ul>
       <div className="flex gap-5 flex-wrap max-h-96 justify-center items-center">
-        <div className="w-full max-w-xs mx-5 sm:m-0 sm:w-80 bg-gray-800 rounded-lg shadow-xl p-5 transform transition-transform duration-300 hover:scale-105">
+        <div className="w-full max-w-xs mx-5 sm:m-0 sm:w-80 bg-gray-800 rounded-lg shadow-xl p-5 transform transition-transform duration-300 hover:scale-110">
           <Pie
             data={{
               labels,
@@ -97,11 +97,11 @@ function Home() {
           />
           <p className="text-white text-xl font-bold mt-4 text-center">Attendance Overview</p>
         </div>
-        <div className="flow-root bg-gray-800 rounded-lg shadow-xl w-full mx-5 sm:m-0 sm:w-80 p-5 transform transition-transform duration-300 hover:scale-105">
+        <div className="flow-root bg-gray-800 rounded-lg shadow-xl w-full mx-5 sm:m-0 sm:w-80 p-5 transform transition-transform duration-300 hover:scale-110">
           <p className="text-white text-xl font-bold">This Week</p>
           <ul role="list" className="divide-y divide-gray-700">
             {thisWeek.map((day) => (
-              <li className="py-3 sm:py-4 hover:bg-neutral-800 transition-colors duration-300" key={day.weekdate}>
+              <li className="py-3 sm:py-4 hover:bg-gray-700 transition-colors duration-300 rounded-lg" key={day.weekdate}>
                 <div className="flex items-center space-x-4">
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium truncate text-white">

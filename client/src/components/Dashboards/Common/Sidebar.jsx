@@ -64,7 +64,7 @@ function Sidebar({ links }) {
       >
         <Link
           to={`/${filteredLinks[0]?.for}-dashboard`}
-          className="py-4 px-4 md:py-5 lg:py-4 gap-2 bg-gray-800 flex items-center text-2xl hover:bg-gray-700 transition-transform duration-200 ease-in-out transform hover:scale-105"
+          className="py-4 px-4 md:py-5 lg:py-4 gap-2 bg-gray-800 flex items-center text-2xl hover:bg-gray-700 transition-transform duration-200 ease-in-out transform hover:scale-110"
         >
           {/* Dashboard */}
         </Link>
@@ -78,7 +78,7 @@ function Sidebar({ links }) {
                 location.pathname === link.url
                   ? "text-blue-500"
                   : "hover:text-blue-500"
-              } hover:bg-gray-700 transition-transform duration-200 ease-in-out transform hover:scale-105`}
+              } hover:bg-gray-700 transition-transform duration-200 ease-in-out transform hover:scale-110`}
             >
               {link.text}
             </Link>
@@ -87,7 +87,7 @@ function Sidebar({ links }) {
         <div className="p-4">
         <button
           onClick={logout}
-          className="w-full flex gap-2 justify-center text-white bg-red-600 hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-transform duration-200 ease-in-out transform hover:scale-105 mb-2"
+          className="w-full flex gap-2 justify-center text-white bg-red-600 hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-transform duration-200 ease-in-out transform hover:scale-110 mb-2"
         >
           Logout
         </button>

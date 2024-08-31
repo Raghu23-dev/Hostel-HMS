@@ -17,9 +17,11 @@ function AllStudents() {
       body: JSON.stringify({ hostel }),
     });
     const data = await res.json();
+    console.log(data.csv); // Log CSV data to check its content
+  
     if (data.success) {
       const link = document.createElement('a');
-      link.href = "data:text/csv;charset=utf-8," + escape(data.csv);
+      link.href = "data:text/csv;charset=utf-8," + encodeURIComponent(data.csv);
       link.download = 'students.csv';
       link.click();
       toast.success(
@@ -41,6 +43,7 @@ function AllStudents() {
       });
     }
   };
+  
 
   const getAll = async () => {
     const data = await getAllStudents();
@@ -92,31 +95,31 @@ function AllStudents() {
 
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center ">
-      <div className="w-3/4 fixed top-20 left-50 right-50 bg-gray-800 shadow-md z-10 p-4 flex justify-between items-center transition-transform transform hover:scale-105 rounded-lg">
+      <div className="w-3/4 fixed top-20 left-50 right-50 bg-gray-800 shadow-md z-10 p-4 flex justify-between items-center transition-transform transform hover:scale-110 rounded-lg">
         <input
           type="text"
           placeholder="Search by student name..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="mx-10 px-5 py-3 border-none bg-gray-700 rounded-lg transition-transform transform hover:scale-105 w-3/4 text-white"
+          className="mx-10 px-5 py-3 border-none bg-gray-700 rounded-lg transition-transform transform hover:scale-110 w-3/4 text-white"
         />
         <button
           onClick={getCSV}
           target="_blank"
           download={true}
-          className="px-2 py-3 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl shadow-xl transition-transform transform hover:scale-105 "
+          className="px-2 py-3 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl shadow-xl transition-transform transform hover:scale-110 "
         >
           Download Full list
         </button>
       </div>
       <div className="pt-20  w-full h-full overflow-auto m-20 ">
-        <div className=" px-10 py-5 rounded-xl shadow-xl sm:w-[50%] sm:min-w-[500px] w-full mx-auto mt-5 max-h-[calc(100vh-140px)] overflow-auto transition-transform transform hover:scale-105 bg-gray-800 ">
+        <div className=" px-10 py-5 rounded-xl shadow-xl sm:w-[50%] sm:min-w-[500px] w-full mx-auto mt-5 max-h-[calc(100vh-140px)] overflow-auto transition-transform transform hover:scale-110 bg-gray-800 ">
           <ul role="list" className="divide-y divide-gray-700 text-white">
             {filteredStudents.length === 0 ?
               "No Students Found"
             :
             filteredStudents.map((student) => (
-              <li className="py-3 px-5   sm:py-4 hover:bg-gray-700 hover:scale-105 transition-all rounded-lg" key={student._id}>
+              <li className="py-3 px-5   sm:py-4 hover:bg-gray-700 hover:scale-110 transition-all rounded-lg" key={student._id}>
                 <div className="flex items-center space-x-4">
                   <div className="flex-shrink-0 text-white">
                     <svg
@@ -139,7 +142,7 @@ function AllStudents() {
                       {student.name}
                     </p>
                     <p className="text-sm truncate text-gray-400">
-                      {student.cms_id} | Room: {student.room_no}
+                      Student ID: {student.cms_id} | Room: {student.room_no}
                     </p>
                   </div>
                   <div className="flex gap-3">

@@ -81,18 +81,18 @@ function Suggestions() {
 
   return (
     <div className="w-full h-screen flex flex-col gap-3 items-center justify-center">
-      <div className="bg-neutral-950 px-10 py-5 rounded-xl shadow-xl sm:w-[50%] sm:min-w-[450px] w-full mt-5 max-h-96 overflow-auto">
-        <span className="text-white font-bold text-xl ">All Students</span>
+      <div className="bg-gray-800 px-10 py-5 rounded-xl shadow-xl sm:w-[50%] sm:min-w-[450px] w-full mt-5 max-h-96 overflow-auto transition-transform transform hover:scale-110">
+        <span className="text-white font-bold text-xl flex justify-center mb-3">Suggestions from all Students</span>
         <ul role="list" className="divide-y divide-gray-700 text-white">
           {suggestions.length === 0
-            ? "No Students Suggestion Found"
+            ? "No Students Suggestion Found"  
             : suggestions.map((suggestion) => (
               <>
                 {showModal && (
                   <Modal closeModal={toggleModal} suggestion={modalData} />
                 )}
                 <li
-                  className="py-3 px-5 rounded sm:py-4 hover:bg-neutral-700 hover:shadow-xl hover:scale-105  transition-all cursor-pointer"
+                  className="py-3 px-5 rounded sm:py-4 hover:bg-gray-700 hover:shadow-xl hover:scale-110  transition-all cursor-pointer rounded-lg"
                   key={suggestion._id}
                 >
                   <div className="flex items-center space-x-4">
@@ -119,12 +119,6 @@ function Suggestions() {
                       <p className="text-sm truncate text-gray-400">
                         {suggestion.description}
                       </p>
-                      <button
-                        className="text-blue-500 text-sm underline"
-                        onClick={() => toggleModal(suggestion)}
-                      >
-                        Read more
-                      </button>
                     </div>
                     <button className="group/show relative z-0"
                       onClick={() => updateSuggestion(suggestion._id)}

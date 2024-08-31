@@ -59,7 +59,7 @@ function Topbar({ name, showContactButton = true }) {
         {showContactButton && (
           <button
             onClick={sendEmail}
-            className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded transition-transform duration-200 ease-in-out transform hover:scale-105"
+            className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded transition-transform duration-200 ease-in-out transform hover:scale-110"
           >
             Get in touch
           </button>

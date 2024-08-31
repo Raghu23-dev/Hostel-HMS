@@ -117,7 +117,7 @@ function Complaints() {
         <form
           method="POST"
           onSubmit={registerComplaint}
-          className="md:w-[30vw] w-full py-5 pb-7 px-10 bg-gray-800 rounded-lg shadow-lg flex flex-col gap-5 transition-transform transform hover:scale-105"
+          className="md:w-[30vw] w-full py-5 pb-7 px-10 bg-gray-800 rounded-lg shadow-lg flex flex-col gap-5 transition-transform transform hover:scale-110"
         >
           <div>
             <label
@@ -155,20 +155,20 @@ function Complaints() {
             <textarea
               name="description"
               placeholder="Please describe your Complaints, We'll resolve it ASAP"
-              className="border sm:text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 outline-none resize-none transition-transform transform hover:scale-105"
+              className="border sm:text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 outline-none resize-none transition-transform transform hover:scale-110"
               onChange={descChange}
               value={desc}
             ></textarea>
             <button
               type="submit"
-              className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-800 text-lg rounded-lg px-5 py-2.5 mt-5 text-center transition-transform transform hover:scale-105"
+              className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-800 text-lg rounded-lg px-5 py-2.5 mt-5 text-center transition-transform transform hover:scale-110"
               disabled={loading}
             >
               {loading ? 'Registering Complaint...' : 'Register Complaint'}
             </button>
           </div>
         </form>
-        <div className="hover:scale-105  transition-all  w-full md:w-80 max-w-md max-h-96 p-4 border rounded-lg shadow sm:p-8  bg-gray-800 border-gray-900 drop-shadow-xl overflow-y-auto">
+        <div className="hover:scale-110  transition-all  w-full md:w-80 max-w-md max-h-96 p-4 border rounded-lg shadow sm:p-8  bg-gray-800 border-gray-900 drop-shadow-xl overflow-y-auto">
           <div className="flex items-center justify-between mb-4">
             <h5 className="text-xl font-bold leading-none text-white ">
               Registered Complaints
@@ -180,7 +180,7 @@ function Complaints() {
                 ? "No complaints registered"
                 : regComplaints.map((complain) => (
                     <li className="py-3 sm:py-4 " key={complain.title}>
-                      <div className="flex items-center space-x-4 hover:scale-105  transition-all  hover:bg-gray-700 rounded-lg">
+                      <div className="flex items-center space-x-4 hover:scale-110  transition-all  hover:bg-gray-700 rounded-lg">
                         <div className="flex-shrink-0 text-white">
                           {complain.status.toLowerCase() === "pending" ? (
                             <svg

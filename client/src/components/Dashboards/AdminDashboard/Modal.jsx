@@ -23,7 +23,7 @@ function Modal({ closeModal, suggestion }) {
             </h3>
             <button
               type="button"
-              className="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-600 hover:text-white"
+              className="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-700 hover:text-white"
               onClick={() => closeModal()}
             >
               <svg

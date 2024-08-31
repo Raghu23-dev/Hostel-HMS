@@ -104,7 +104,8 @@ export default function AdminSignIn() {
   };
 
   return (
-    <div className="w-full max-w-md h-[600px] rounded-lg bg-gray-800 border-gray-700 transition-transform transform hover:scale-105 mt-20">
+    <>
+    <div className="w-full max-w-md h-[600px] rounded-lg bg-gray-800 border-gray-700 transition-transform transform hover:scale-110 mt-20">
       <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
       <h3 className="text-l font-bold leading-tight tracking-tight md:text-lg text-blue-700">
           Welcome back
@@ -120,7 +121,7 @@ export default function AdminSignIn() {
             required
             value={inputEmail}
             onChange={changeEmail}
-            className="w-full p-2.5 text-sm rounded-lg border-gray-600 bg-gray-700 border focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 text-white transition-transform transform hover:scale-105"
+            className="w-full p-2.5 text-sm rounded-lg border-gray-600 bg-gray-700 border focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 text-white transition-transform transform hover:scale-110"
           />
           <input
             name="password"
@@ -129,11 +130,11 @@ export default function AdminSignIn() {
             required
             value={pass}
             onChange={changePass}
-            className="w-full p-2.5 text-sm rounded-lg border-gray-600 bg-gray-700 border focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 text-white transition-transform transform hover:scale-105"
+            className="w-full p-2.5 text-sm rounded-lg border-gray-600 bg-gray-700 border focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 text-white transition-transform transform hover:scale-110"
           />
           <button
             type="submit"
-            className="w-full text-white hover:bg-blue-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-700 focus:ring-blue-800 transition-transform transform hover:scale-105"
+            className="w-full text-white hover:bg-blue-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-700 focus:ring-blue-800 transition-transform transform hover:scale-110"
           >
             {loader ? (
               <>
@@ -143,20 +144,22 @@ export default function AdminSignIn() {
               <span>Sign in</span>
             )}
           </button>
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="dark"
-          />
         </form>
       </div>
+    
     </div>
+    <ToastContainer
+    position="top-right"
+    autoClose={5000}
+    hideProgressBar={false}
+    newestOnTop={false}
+    closeOnClick
+    rtl={false}
+    pauseOnFocusLoss
+    draggable
+    pauseOnHover
+    theme="dark"
+  />
+  </>
   );
 }

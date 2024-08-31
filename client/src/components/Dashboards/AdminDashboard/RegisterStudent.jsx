@@ -92,6 +92,7 @@ function RegisterStudent() {
   };
 
   const hostel = JSON.parse(localStorage.getItem("hostel")).name;
+
   const [cms, setCms] = useState();
   const [name, setName] = useState();
   const [room_no, setRoomNo] = useState();
@@ -110,16 +111,13 @@ function RegisterStudent() {
 
   return (
     <div className="w-full max-h-screen pt-20 flex flex-col items-center justify-center">
-      <h1 className="text-white font-bold text-5xl mt-10 mb-5">
-        Register Student
-      </h1>
-      <div className="md:w-[60vw] w-full p-10 bg-neutral-950 rounded-lg shadow-xl mb-10 overflow-auto">
-        <form method="post" onSubmit={registerStudent} className="flex flex-col gap-3">
-          <div className="flex gap-5 flex-wrap justify-center md:w-full sw-[100vw]">
+      <div className="md:w-[70vw]  w-full  p-10 bg-gray-800 rounded-lg shadow-xl mb-10 overflow-auto ">
+        <form method="post" onSubmit={registerStudent} className="flex flex-col gap-6">
+          <div className="grid md:grid-cols-2 grid-cols-1 gap-5 w-full ">
             <Input
               field={{
-                name: "name",
-                placeholder: "Student Name",
+                name: "Name",
+                placeholder: "Student's Name",
                 type: "text",
                 req: true,
                 value: name,
@@ -128,8 +126,8 @@ function RegisterStudent() {
             />
             <Input
               field={{
-                name: "cms",
-                placeholder: "Student CMS",
+                name: "UID",
+                placeholder: "Student 6 digit UID ",
                 type: "number",
                 req: true,
                 value: cms,
@@ -138,8 +136,8 @@ function RegisterStudent() {
             />
             <Input
               field={{
-                name: "dob",
-                placeholder: "Student dob",
+                name: "DOB",
+                placeholder: "Student DOB",
                 type: "date",
                 req: true,
                 value: dob,
@@ -148,20 +146,18 @@ function RegisterStudent() {
             />
             <Input
               field={{
-                name: "cnic",
-                placeholder: "Student CNIC",
+                name: "AADHAR",
+                placeholder: "13 digits ID",
                 type: "text",
                 req: true,
                 value: cnic,
                 onChange: (e) => setCnic(e.target.value),
               }}
             />
-          </div>
-          <div className="flex gap-5 w-full flex-wrap justify-center">
             <Input
               field={{
-                name: "email",
-                placeholder: "Student Email",
+                name: "E-mail",
+                placeholder: "email@domain.com",
                 type: "email",
                 req: true,
                 value: email,
@@ -170,8 +166,8 @@ function RegisterStudent() {
             />
             <Input
               field={{
-                name: "contact",
-                placeholder: "Student Contact",
+                name: "Contact",
+                placeholder: "91+(***********)",
                 type: "text",
                 req: true,
                 value: contact,
@@ -180,46 +176,31 @@ function RegisterStudent() {
             />
             <Input
               field={{
-                name: "father_name",
-                placeholder: "Student's Father Name",
+                name: "Father's Name",
+                placeholder: "Student's Father's Name",
                 type: "text",
                 req: true,
                 value: fatherName,
                 onChange: (e) => setFatherName(e.target.value),
               }}
             />
-          </div>
-          <div className="mx-12">
-            <label
-              htmlFor="address"
-              className="block mb-2 text-sm font-medium text-white"
-            >
-              Address
-            </label>
-            <textarea
-              name="address"
-              placeholder="Student Address"
-              required
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              className="border flex-grow sm:text-sm rounded-lg block w-full p-2.5 bg-neutral-700 border-neutral-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 outline-none"
-            />
-          </div>
-          <div className="flex flex-wrap gap-5 w-full justify-center">
             <Input
               field={{
                 name: "room",
-                placeholder: "Student Room",
+                placeholder: "3 digit Room No",
                 type: "number",
                 req: true,
                 value: room_no,
                 onChange: (e) => setRoomNo(e.target.value),
               }}
             />
+          </div>
+
+          <div className="grid md:grid-cols-2 grid-cols-1 gap-5 w-full">
             <Input
               field={{
-                name: "hostel",
-                placeholder: "Student Hostel",
+                name: "Hostel",
+                placeholder: "Hostel",
                 type: "text",
                 req: true,
                 value: hostel,
@@ -228,20 +209,18 @@ function RegisterStudent() {
             />
             <Input
               field={{
-                name: "dept",
-                placeholder: "Student Department",
+                name: "Department",
+                placeholder: "Department",
                 type: "text",
                 req: true,
                 value: dept,
                 onChange: (e) => setDept(e.target.value),
               }}
             />
-          </div>
-          <div className="flex flex-wrap justify-center gap-5">
             <Input
               field={{
-                name: "course",
-                placeholder: "Student Course",
+                name: "Course",
+                placeholder: "Stream",
                 type: "text",
                 req: true,
                 value: course,
@@ -250,8 +229,8 @@ function RegisterStudent() {
             />
             <Input
               field={{
-                name: "batch",
-                placeholder: "Student Batch",
+                name: "Batch",
+                placeholder: "20**",
                 type: "number",
                 req: true,
                 value: batch,
@@ -259,11 +238,26 @@ function RegisterStudent() {
               }}
             />
           </div>
-          <div className="mx-12">
+
+          <div className="w-full">
+            <label
+              htmlFor="address"
+              className="block mb-2 text-sm font-medium text-white"
+            >
+              Address
+            </label>
+            <textarea
+              name="address"
+              placeholder="Student's Permenant Resident Address"
+              required
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="border flex-grow sm:text-sm rounded-lg block w-full p-2.5 bg-neutral-700 border-neutral-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 outline-none my-2 resize-none transition-transform transform hover:scale-110 "
+            />
             <Input
               field={{
-                name: "password",
-                placeholder: "Student Password",
+                name: "Password",
+                placeholder: "Give a Strong Password",
                 type: "password",
                 req: true,
                 value: password,
@@ -271,7 +265,8 @@ function RegisterStudent() {
               }}
             />
           </div>
-          <div className="mt-5">
+
+          <div className="mt-5 flex justify-center transition-transform transform hover:scale-110">
             <Button>
               {loading ? (
                 <>
@@ -281,7 +276,11 @@ function RegisterStudent() {
                 <span>Register Student</span>
               )}
             </Button>
-            <ToastContainer
+            
+          </div>
+        </form>
+      </div>
+      <ToastContainer
               position="top-right"
               autoClose={3000}
               hideProgressBar={false}
@@ -293,9 +292,6 @@ function RegisterStudent() {
               pauseOnHover
               theme="dark"
             />
-          </div>
-        </form>
-      </div>
     </div>
   );
 }

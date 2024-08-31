@@ -186,41 +186,57 @@ const deleteStudent = async (req, res) => {
 const csvStudent = async (req, res) => {
     let success = false;
     try {
-        // console.log(req.body);
+        // Validate request
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            // console.log(errors);
-            return res.status(400).json({success, errors: errors.array() });
+            return res.status(400).json({ success, errors: errors.array() });
         }
 
         const { hostel } = req.body;
 
+        // Find the hostel
         const shostel = await Hostel.findById(hostel);
+        if (!shostel) {
+            return res.status(400).json({ success, errors: [{ msg: 'Hostel not found' }] });
+        }
 
+        // Find students in the hostel
         const students = await Student.find({ hostel: shostel.id }).select('-password');
 
-        students.forEach(student => {
-            student.hostel_name = shostel.name;
-            student.d_o_b = new Date(student.dob).toDateString().slice(4);
-            student.cnic_no = student.cnic.slice(0, 5) + '-' + student.cnic.slice(5, 12) + '-' + student.cnic.slice(12);
-            student.contact_no = "+91 "+student.contact.slice(1);
+        // Transform student data
+        const transformedStudents = students.map(student => {
+            return {
+                Name: student.name,
+                'Student Id': student.cms_id,
+                'Room No': student.room_no,
+                Batch: student.batch,
+                Dept: student.dept,
+                Course: student.course,
+                Email: student.email,
+                'Father Name': student.father_name,
+                'Contact No': "+91" + student.contact.slice(2),
+                Address: student.address,
+                DOB: new Date(student.dob).toDateString().slice(4),
+                'AADHAR Number': student.cnic.slice(0, 5) + '-' + student.cnic.slice(5, 12) + '-' + student.cnic.slice(12)
+            };
         });
 
+        // Define CSV fields
         const fields = ['Name', 'Student Id', 'Room No', 'Batch', 'Dept', 'Course', 'Email', 'Father Name', 'Contact No', 'Address', 'DOB', 'AADHAR Number'];
-
         const opts = { fields };
 
+        // Create CSV parser and parse data
         const parser = new Parser(opts);
-
-        const csv = parser.parse(students);
+        const csv = parser.parse(transformedStudents);
 
         success = true;
-        res.json({success, csv});
+        res.json({ success, csv });
     } catch (err) {
         console.log(err);
-        res.status(500).json({success, errors: [{msg: 'Server error'}]});
+        res.status(500).json({ success, errors: [{ msg: 'Server error' }] });
     }
 }
+
 
 module.exports = {
     registerStudent,
