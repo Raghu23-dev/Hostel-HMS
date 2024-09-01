@@ -1,0 +1,58 @@
+<testsuites id="" name="" tests="14" failures="0" skipped="0" errors="0" time="16.365299999999998">
+<testsuite name="Admin\AAttendance.test.js" timestamp="2024-09-01T19:32:42.543Z" hostname="" tests="1" failures="0" skipped="0" time="4.338" errors="0">
+<testcase name="test" classname="Admin\AAttendance.test.js" time="4.338">
+</testcase>
+</testsuite>
+<testsuite name="Admin\AdminSignIn.test.js" timestamp="2024-09-01T19:32:42.543Z" hostname="" tests="1" failures="0" skipped="0" time="3.893" errors="0">
+<testcase name="test" classname="Admin\AdminSignIn.test.js" time="3.893">
+</testcase>
+</testsuite>
+<testsuite name="Admin\AllStudents.test.js" timestamp="2024-09-01T19:32:42.543Z" hostname="" tests="1" failures="0" skipped="0" time="3.873" errors="0">
+<testcase name="test" classname="Admin\AllStudents.test.js" time="3.873">
+</testcase>
+</testsuite>
+<testsuite name="Admin\ASuggestions.test.js" timestamp="2024-09-01T19:32:42.543Z" hostname="" tests="1" failures="0" skipped="0" time="4.223" errors="0">
+<testcase name="test" classname="Admin\ASuggestions.test.js" time="4.223">
+</testcase>
+</testsuite>
+<testsuite name="Admin\RegisterStudent.test.js" timestamp="2024-09-01T19:32:42.543Z" hostname="" tests="1" failures="0" skipped="0" time="6.171" errors="0">
+<testcase name="test" classname="Admin\RegisterStudent.test.js" time="6.171">
+</testcase>
+</testsuite>
+<testsuite name="Common\HeroSection.test.js" timestamp="2024-09-01T19:32:42.543Z" hostname="" tests="1" failures="0" skipped="0" time="3.546" errors="0">
+<testcase name="test" classname="Common\HeroSection.test.js" time="3.546">
+</testcase>
+</testsuite>
+<testsuite name="Common\Navbar.test.js" timestamp="2024-09-01T19:32:42.543Z" hostname="" tests="1" failures="0" skipped="0" time="3.247" errors="0">
+<testcase name="test" classname="Common\Navbar.test.js" time="3.247">
+</testcase>
+</testsuite>
+<testsuite name="Common\Sidebar.test.js" timestamp="2024-09-01T19:32:42.543Z" hostname="" tests="1" failures="0" skipped="0" time="3.227" errors="0">
+<testcase name="test" classname="Common\Sidebar.test.js" time="3.227">
+</testcase>
+</testsuite>
+<testsuite name="Common\Topbar.test.js" timestamp="2024-09-01T19:32:42.543Z" hostname="" tests="1" failures="0" skipped="0" time="3.208" errors="0">
+<testcase name="test" classname="Common\Topbar.test.js" time="3.208">
+</testcase>
+</testsuite>
+<testsuite name="Student\Attendance.test.js" timestamp="2024-09-01T19:32:42.543Z" hostname="" tests="1" failures="0" skipped="0" time="3.446" errors="0">
+<testcase name="test" classname="Student\Attendance.test.js" time="3.446">
+</testcase>
+</testsuite>
+<testsuite name="Student\Complaint.test.js" timestamp="2024-09-01T19:32:42.543Z" hostname="" tests="1" failures="0" skipped="0" time="3.187" errors="0">
+<testcase name="test" classname="Student\Complaint.test.js" time="3.187">
+</testcase>
+</testsuite>
+<testsuite name="Student\Home.test.js" timestamp="2024-09-01T19:32:42.543Z" hostname="" tests="1" failures="0" skipped="0" time="2.362" errors="0">
+<testcase name="test" classname="Student\Home.test.js" time="2.362">
+</testcase>
+</testsuite>
+<testsuite name="Student\SignIn.test.js" timestamp="2024-09-01T19:32:42.543Z" hostname="" tests="1" failures="0" skipped="0" time="2.373" errors="0">
+<testcase name="test" classname="Student\SignIn.test.js" time="2.373">
+</testcase>
+</testsuite>
+<testsuite name="Student\Suggestions.test.js" timestamp="2024-09-01T19:32:42.543Z" hostname="" tests="1" failures="0" skipped="0" time="2.277" errors="0">
+<testcase name="test" classname="Student\Suggestions.test.js" time="2.277">
+</testcase>
+</testsuite>
+</testsuites>
